@@ -31,14 +31,14 @@ if (!$joueur) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/football_manager/public/assets/css/formulaire.css">
+        <link rel="stylesheet" href="/../../public/assets/css/formulaire.css">
         <title>Modifier un joueur</title>
     </head>
     <body>
     <div>
         <main>
             <h1>Modifier un joueur</h1>
-            <form method="POST" action="/football_manager/app/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($numero_licence) ?>">
+            <form method="POST" action="/../../app/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($numero_licence) ?>">
 
                 <div class="form-group">
                     <label for="numero_licence">Numéro de licence :</label>

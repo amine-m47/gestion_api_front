@@ -53,11 +53,11 @@ function traiterDemandePost($controleurSelection, $idRencontre, $postesFixes, $p
     try {
         if ($matchPasse) {
             $controleurSelection->updateNotes($idRencontre, $notes);
-            header("Location: /football_manager/rencontres");
+            header("Location: /../../rencontres");
             exit;
         } else {
             $controleurSelection->validerSelection($idRencontre, $postesPostes);
-            header("Location: /football_manager/rencontres");
+            header("Location: /../../rencontres");
             exit;
         }
     } catch (\Exception $e) {
@@ -88,7 +88,7 @@ function obtenirClassePoste($poste) {
 <head>
     <meta charset="UTF-8">
     <title>Feuille de Match</title>
-    <link rel="stylesheet" href="/football_manager/public/assets/css/selection.css">
+    <link rel="stylesheet" href="/../../public/assets/css/selection.css">
 </head>
 <body>
 <main id="fdm">

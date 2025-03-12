@@ -13,7 +13,7 @@ $fullName = htmlspecialchars($infosUtilisateur['prenom']) . " " . htmlspecialcha
 // Traiter la mise à jour si le formulaire est soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = $utilisateurControleur->modifierInfos();
-    header("refresh:1;url=/football_manager/accueil");
+    header("refresh:1;url=/../../accueil");
 }
 ?>
 
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'accueil</title>
-    <link rel="stylesheet" href="/football_manager/public/assets/css/accueil.css">
+    <link rel="stylesheet" href="/../../public/assets/css/accueil.css">
 </head>
 <body>
 <main>
