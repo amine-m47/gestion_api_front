@@ -82,14 +82,14 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/football_manager/public/assets/css/rencontres.css">
+    <link rel="stylesheet" href="/../../public/assets/css/rencontres.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Liste des Rencontres</title>
 </head>
 <body>
 <main id="liste">
     <h1>Gestion des rencontres</h1>
-    <div style="text-align: center;"><a href="/football_manager/rencontres/ajouter" class="btn-ajouter">Ajouter une rencontre</a></div>
+    <div style="text-align: center;"><a href="/../../rencontres/ajouter" class="btn-ajouter">Ajouter une rencontre</a></div>
 
     <div class="rencontres-container">
 
@@ -275,9 +275,9 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                     </div>
 
                                 <!-- Actions -->
-                                    <a href="/football_manager/rencontres/feuille_de_rencontre?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Evaluations</a>
-                                        <a href="/football_manager/rencontres/resultat?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Score</a>
-                                    <a href="/football_manager/rencontres/supprimer?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
+                                    <a href="/../../rencontres/feuille_de_rencontre?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Evaluations</a>
+                                        <a href="/../../rencontres/resultat?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Score</a>
+                                    <a href="/../../rencontres/supprimer?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
                                         <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
                                     </a>
                                     <?php else: ?>
@@ -429,11 +429,11 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                             <!-- Actions -->
                             <div class="actions">
-                                <a href="/football_manager/rencontres/feuille_de_rencontre?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Sélection</a>
-                                <a href="/football_manager/rencontres/modifier?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">
+                                <a href="/../../rencontres/feuille_de_rencontre?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Sélection</a>
+                                <a href="/../../rencontres/modifier?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">
                                     <i class="fas fa-edit"></i> <!-- Icône de modification -->
                                 </a>
-                                <a href="/football_manager/rencontres/supprimer?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
+                                <a href="/../../rencontres/supprimer?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
                                     <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
                                 </a>
                             </div>
