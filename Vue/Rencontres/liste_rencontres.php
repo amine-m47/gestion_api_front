@@ -1,10 +1,6 @@
 <?php
 include __DIR__ . '/../Layouts/header.php';
 
-use App\Controleurs\RencontreControleur;
-use App\Controleurs\SelectionControleur;
-use App\Controleurs\JoueurControleur;
-use App\Controleurs\UtilisateurControleur;
 
 $controleurRencontre = new RencontreControleur();
 $controleurSelection = new SelectionControleur();
