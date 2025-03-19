@@ -1,5 +1,5 @@
 const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint';
-const resource = '/JoueurEndpoint';
+const resource = '/JoueurEndpoint.php';
 
 // Méthode pour effectuer un appel API GET pour récupérer tous les joueurs
 function getAllJoueurs() {
@@ -84,10 +84,10 @@ function displayData(joueurs) {
         // Ajouter les actions Modifier et Supprimer
         const actionsCell = row.insertCell(9);
         actionsCell.innerHTML = `
-            <a class="btn-modifier" href="/football_manager/joueurs/modifier?numero_licence=${joueur.numero_licence}">
+            <a class="btn-modifier" href="modifier_joueur.php?numero_licence=${joueur.numero_licence}">
                 <i class="fas fa-edit"></i>
             </a>
-            <a class="btn-supprimer" href="#" onclick="deleteJoueur('${joueur.numero_licence}')">
+            <a class="btn-supprimer" href="modifier_joueur.php?numero_licence=${joueur.numero_licence}" onclick="return confirm('Voulez-vous vraiment supprimer ce joueur ?')">
                 <i class="fas fa-trash-alt"></i>
             </a>
         `;

@@ -40,7 +40,7 @@
 </div>
 
 <!-- Chargement du script JavaScript -->
-<script src="Joueur.js"></script>
+<script src="/FootAPI/gestion_api_front/app/Controleurs/Joueur.js" defer></script>
 
 <!-- Chargement des joueurs au démarrage -->
 <script>
