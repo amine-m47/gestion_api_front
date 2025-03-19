@@ -1,15 +1,4 @@
-<?php
-include __DIR__ . '/../Layouts/header.php';
-use App\Controleurs\JoueurControleur;
-
-$joueurControleur = new JoueurControleur();
-$joueurs = $joueurControleur->liste_joueurs();
-
-// Vérification si des joueurs existent
-if (!$joueurs || count($joueurs) === 0) {
-    echo "<p style='color: red;text-align: center' >Aucun joueur trouvé.</p>";
-}
-?>
+<?php include __DIR__ . '/../Layouts/header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -43,34 +32,23 @@ if (!$joueurs || count($joueurs) === 0) {
                 <th>Actions</th>
             </tr>
             </thead>
-            <tbody>
-            <?php foreach ($joueurs as $joueur) : ?>
-                <tr>
-                    <td><?= htmlspecialchars($joueur['numero_licence']) ?></td>
-                    <td><?= htmlspecialchars($joueur['nom']) ?></td>
-                    <td><?= htmlspecialchars($joueur['prenom']) ?></td>
-                    <td><?= htmlspecialchars($joueur['date_naissance']) ?></td>
-                    <td><?= htmlspecialchars($joueur['taille']) ?> m</td>
-                    <td><?= htmlspecialchars($joueur['poids']) ?> kg</td>
-                    <td><?= htmlspecialchars($joueur['statut']) ?></td>
-                    <td><?= htmlspecialchars($joueur['position_preferee']) ?></td>
-                    <td><?= htmlspecialchars($joueur['commentaire']) ?></td>
-                    <td class="actions">
-                        <a class="btn-modifier" href="/football_manager/joueurs/modifier?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>">
-                            <i class="fas fa-edit"></i>
-                        </a>
-
-                        <a class="btn-supprimer" href="/football_manager/joueurs/supprimer?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>"
-                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
+            <tbody id="responseTableBody">
+            <!-- Les joueurs seront injectés ici en JavaScript -->
             </tbody>
         </table>
     </main>
 </div>
+
+<!-- Chargement du script JavaScript -->
+<script src="Joueur.js"></script>
+
+<!-- Chargement des joueurs au démarrage -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        getAllJoueurs(); // Charge automatiquement les joueurs à l'ouverture de la page
+    });
+</script>
+
 </body>
 </html>
 
