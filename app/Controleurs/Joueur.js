@@ -87,7 +87,7 @@ function displayData(joueurs) {
             <a class="btn-modifier" href="modifier_joueur.php?numero_licence=${joueur.numero_licence}">
                 <i class="fas fa-edit"></i>
             </a>
-            <a class="btn-supprimer" href="modifier_joueur.php?numero_licence=${joueur.numero_licence}" onclick="return confirm('Voulez-vous vraiment supprimer ce joueur ?')">
+            <a class="btn-supprimer" href="supprimer_joueur.php?numero_licence=${joueur.numero_licence}" onclick="return confirm('Voulez-vous vraiment supprimer ce joueur ?')">
                 <i class="fas fa-trash-alt"></i>
             </a>
         `;

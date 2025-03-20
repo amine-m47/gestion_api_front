@@ -1,23 +1,26 @@
-
-
 <?php
 include __DIR__ . '/../Layouts/header.php';
 ?>
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supprimer un joueur</title>
+</head>
+<body>
 <main>
-    <h1>Suppression du joueur : Licence "<?=htmlspecialchars($_GET['numero_licence']) ?>"</h1>
+    <h1>Suppression du joueur</h1>
 </main>
 
-<?php
-use App\Controleurs\JoueurControleur;
-
-$controleurJoueur = new JoueurControleur();
-
-$numero_licence = $_GET['numero_licence'] ?? null;
-
-if ($numero_licence) {
-    $controleurJoueur->supprimer_joueur($numero_licence);
-} else {
-    echo "Numéro de licence non fourni.";
-    exit;
-}
+<script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const numeroLicence = urlParams.get('numero_licence');
+        deleteJoueur(numeroLicence);
+        window.location.href = 'liste_joueurs.php';
+    });
+</script>
+<script src="/FootAPI/gestion_api_front/app/Controleurs/Joueur.js" defer></script>
+</body>
+</html>
