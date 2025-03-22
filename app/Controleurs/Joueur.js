@@ -3,67 +3,18 @@ const resource = '/JoueurEndpoint.php';
 
 // Méthode pour effectuer un appel API GET pour récupérer tous les joueurs
 function getAllJoueurs() {
-    fetch(`${baseUrl}${resource}`).then(response => response.json()) // Convertir la réponse en JSON
+    fetch(`${baseUrl}${resource}`)
+        .then(response => response.json()) // Convertir la réponse en JSON
         .then(data => {
-            displayData(data);
+            if (data.status_code === 200) {
+                displayData(data.data);
+            } else {
+                console.error('Erreur lors de la récupération des joueurs:', data.status_message);
+            }
         })
         .catch(error => console.error('Erreur Fetch:', error));
 }
 
-// Méthode pour effectuer un appel API GET pour récupérer un joueur par numéro de licence
-function getJoueur(numero_licence) {
-    fetch(`${baseUrl}${resource}/${numero_licence}`)
-        .then(response => response.json()) // Convertir la réponse en JSON
-        .then(data => {
-            displayData([data]);
-        })
-        .catch(error => console.error('Erreur Fetch:', error));
-}
-
-// Méthode pour créer un nouveau joueur
-function addJoueur(joueurData) {
-    const requestOptions = {
-        method: 'POST', // Méthode HTTP
-        headers: { 'Content-Type': 'application/json' }, // Type de contenu
-        body: JSON.stringify(joueurData) // Corps de la requête
-    };
-    fetch(`${baseUrl}${resource}`, requestOptions).then(response => response.json()) // Convertir la réponse en JSON
-        .then(data => {
-            console.log(data); // Afficher en console les données récupérées
-        })
-        .catch(error => console.error('Erreur Fetch:', error)); // Gérer les erreurs
-}
-
-// Méthode pour mettre à jour un joueur
-function updateJoueur(numero_licence, joueurData) {
-    const requestOptions = {
-        method: 'PUT', // Méthode HTTP
-        headers: { 'Content-Type': 'application/json' }, // Type de contenu
-        body: JSON.stringify(joueurData) // Corps de la requête
-    };
-    fetch(`${baseUrl}${resource}/${numero_licence}`, requestOptions)
-        .then(response => response.json()) // Convertir la réponse en JSON
-        .then(data => {
-            console.log(data); // Afficher en console les données récupérées
-        })
-        .catch(error => console.error('Erreur Fetch:', error)); // Gérer les erreurs
-}
-
-// Méthode pour supprimer un joueur
-function deleteJoueur(numero_licence) {
-    const requestOptions = {
-        method: 'DELETE', // Méthode HTTP
-        headers: { 'Content-Type': 'application/json' } // Type de contenu
-    };
-    fetch(`${baseUrl}${resource}/${numero_licence}`, requestOptions)
-        .then(response => response.json()) // Convertir la réponse en JSON
-        .then(data => {
-            console.log(data); // Afficher en console les données récupérées
-        })
-        .catch(error => console.error('Erreur Fetch:', error)); // Gérer les erreurs
-}
-
-// Méthode pour afficher les données dans le tableau HTML
 // Méthode pour afficher les données dans le tableau HTML
 function displayData(joueurs) {
     const tableBody = document.getElementById('responseTableBody');
@@ -84,14 +35,21 @@ function displayData(joueurs) {
         // Ajouter les actions Modifier et Supprimer
         const actionsCell = row.insertCell(9);
         actionsCell.innerHTML = `
-            <a class="btn-modifier" href="modifier_joueur.php?numero_licence=${joueur.numero_licence}">
+            <button class="btn-modifier" onclick="prepareUpdate('${joueur.numero_licence}')">
                 <i class="fas fa-edit"></i>
-            </a>
-            <a class="btn-supprimer" href="supprimer_joueur.php?numero_licence=${joueur.numero_licence}" onclick="return confirm('Voulez-vous vraiment supprimer ce joueur ?')">
+            </button>
+            <button class="btn-supprimer" onclick="deleteJoueur('${joueur.numero_licence}')">
                 <i class="fas fa-trash-alt"></i>
-            </a>
+            </button>
         `;
     });
+}
+
+// Fonction pour préparer la mise à jour d'un joueur
+function prepareUpdate(numero_licence) {
+    document.getElementById('updateNumeroLicence').value = numero_licence;
+    // Remplir les champs de mise à jour avec les données du joueur
+    // Vous pouvez appeler getJoueur(numero_licence) pour obtenir les données du joueur et les insérer dans les champs
 }
 
 // Attacher les événements aux boutons
@@ -131,4 +89,9 @@ document.getElementById('updateJoueur').addEventListener('click', () => {
 document.getElementById('deleteJoueur').addEventListener('click', () => {
     const numero_licence = document.getElementById('deleteNumeroLicence').value;
     deleteJoueur(numero_licence);
+});
+
+// Chargement des joueurs au démarrage
+document.addEventListener("DOMContentLoaded", function() {
+    getAllJoueurs(); // Charge automatiquement les joueurs à l'ouverture de la page
 });
