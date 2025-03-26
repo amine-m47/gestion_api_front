@@ -1,7 +1,7 @@
 <?php
 namespace App\Controleurs;
 
-use App\Modeles\Joueur;
+use App\Modele\Joueur;
 
 class JoueurControleur {
 

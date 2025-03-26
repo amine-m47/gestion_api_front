@@ -2,10 +2,10 @@
 
 namespace App\Controleurs;
 
-use App\Modeles\Database;
-use App\Modeles\Utilisateur;
+use App\Modele\Database;
+use App\Modele\Utilisateur;
 
-class uthControleur {
+class AuthControleur {
     private $db;
 
     public function __construct() {

@@ -1,7 +1,7 @@
 <?php
 namespace App\Controleurs;
 
-use App\Modeles\Rencontre;
+use App\Modele\Rencontre;
 
 class RencontreControleur {
 

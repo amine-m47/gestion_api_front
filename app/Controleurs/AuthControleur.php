@@ -2,7 +2,7 @@
 
 namespace App\Controleurs;
 
-use App\Modeles\Utilisateur;
+use App\Modele\Utilisateur;
 use App\Config\Database;
 class AuthControleur {
     private $db;
