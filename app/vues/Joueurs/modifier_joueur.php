@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/formulaire.css">
-    <script src="/FootAPI/gestion_api_front/public/js/Joueur.js" defer></script>
+    <script src="/FootAPI/gestion_api_front/app/Controleurs/Joueur.js" defer></script>
     <title>Modifier un joueur</title>
 </head>
 <body>

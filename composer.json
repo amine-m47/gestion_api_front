@@ -13,5 +13,8 @@
             "email": "pep.guardiola@man-city.com"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-json": "*",
+      "ext-pdo": "*"
+    }
 }

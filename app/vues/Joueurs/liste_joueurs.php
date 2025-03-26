@@ -1,4 +1,6 @@
-<?php include __DIR__ . '/../Layouts/header.php'; ?>
+<?php include __DIR__ . '/../Layouts/header.php';
+header("Access-Control-Allow-Origin: *");
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -14,7 +16,7 @@
     <main>
         <h1>Gestion des joueurs</h1>
         <div style="text-align: center; margin-top: 10px">
-            <a class="btn-ajouter" href="/football_manager/joueurs/ajouter">Ajouter un joueur</a>
+            <a class="btn-ajouter" href="ajouter_joueur.php">Ajouter un joueur</a>
         </div>
 
         <table border="1">
@@ -40,7 +42,7 @@
 </div>
 
 <!-- Chargement du script JavaScript -->
-<script src="/FootAPI/gestion_api_front/app/Controleurs/Joueur.js" defer></script>
+<script src="../../Controleurs/Joueur.js" defer></script>
 
 <!-- Chargement des joueurs au démarrage -->
 <script>
