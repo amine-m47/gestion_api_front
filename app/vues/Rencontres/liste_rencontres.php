@@ -13,13 +13,10 @@
     <div style="text-align: center;"><a href="ajouter_rencontre.php" class="btn-ajouter">Ajouter une rencontre</a></div>
 
     <div class="rencontres-container">
-        <!-- Colonne des matchs passés -->
         <div class="column">
             <h2>Matchs Passés</h2>
             <div id="pastMatches"></div>
         </div>
-
-        <!-- Colonne des matchs à venir -->
         <div class="column">
             <h2>Matchs à Venir</h2>
             <div id="upcomingMatches"></div>
@@ -31,7 +28,6 @@
     const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint';
     const resource = '/RencontreEndpoint.php';
 
-    // Fonction pour récupérer et afficher les rencontres
     async function fetchAndDisplayRencontres() {
         try {
             const response = await fetch(`${baseUrl}${resource}`);
@@ -42,7 +38,6 @@
         }
     }
 
-    // Fonction pour afficher les rencontres
     function displayRencontres(rencontres) {
         const pastMatchesDiv = document.getElementById('pastMatches');
         const upcomingMatchesDiv = document.getElementById('upcomingMatches');
@@ -62,7 +57,6 @@
         });
     }
 
-    // Fonction pour créer une carte de match
     function createMatchCard(rencontre, isFuture) {
         const matchCard = document.createElement('div');
         matchCard.className = 'match-card';
@@ -71,64 +65,59 @@
         matchHeader.className = 'match-header';
         matchHeader.innerHTML = `
             <div class="match-date-time">
-                <span class="match-date"><strong>${formatDate(rencontre.date_rencontre)}</strong> à </span>
-                <span class="match-time"><strong>${rencontre.heure_rencontre}</strong> - </span>
-                <span class="match-lieu">${rencontre.lieu}</span>
+                <strong>${formatDate(rencontre.date_rencontre)}</strong> à ${rencontre.heure_rencontre} - ${rencontre.lieu}
             </div>
             <div class="match-result">
                 <strong><span style="color: ${getScoreColor(rencontre.score_equipe, rencontre.score_adverse)};">${rencontre.resultat}</span></strong>
-            </div>
-        `;
+            </div>`;
 
         const matchBody = document.createElement('div');
         matchBody.className = 'match-body';
         matchBody.innerHTML = `
             <div class="team">
                 <div class="team-name team-end">${isFuture ? 'Équipe' : 'Nom Équipe'}</div>
-                <span class="score" style="background-color: ${getScoreColor(rencontre.score_equipe, rencontre.score_adverse)};">${getScore(rencontre.score_equipe, rencontre.score_adverse, rencontre.lieu)}</span>
+                <span class="score" style="background-color: ${getScoreColor(rencontre.score_equipe, rencontre.score_adverse)};">
+                    ${getScore(rencontre.score_equipe, rencontre.score_adverse, rencontre.lieu)}
+                </span>
                 <div class="team-name team-left">${rencontre.equipe_adverse}</div>
-            </div>
-        `;
+            </div>`;
 
         const matchFooter = document.createElement('div');
         matchFooter.className = 'match-footer';
         matchFooter.innerHTML = `
-            <div class="actions">
-                <a href="/feuille_rencontres.html?id_rencontre=${rencontre.id_rencontre}" class="btn-action">${isFuture ? 'Sélection' : 'Evaluations'}</a>
-                <a href="/ajouter_resultat.html?id_rencontre=${rencontre.id_rencontre}" class="btn-action">${isFuture ? 'Modifier' : 'Score'}</a>
-                <a href="#" class="btn-supprimer" onclick="confirmDelete(${rencontre.id_rencontre})">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </div>
-        `;
+    <div class="actions">
+        <a href="/FootAPI/gestion_api_front/app/vues/Rencontres/feuille_rencontres.php?id_rencontre=${rencontre.id_rencontre}" class="btn-action">
+            ${isFuture ? 'Sélection' : 'Evaluations'}
+        </a>
+        <a href="${isFuture
+            ? `/FootAPI/gestion_api_front/app/vues/Rencontres/modifier_rencontre.php?id_rencontre=${rencontre.id_rencontre}`
+            : `/FootAPI/gestion_api_front/app/vues/Rencontres/ajouter_resultat.php?id_rencontre=${rencontre.id_rencontre}`}" class="btn-action">
+            ${isFuture ? 'Modifier' : 'Score'}
+        </a>
+        <a href="#" class="btn-supprimer" onclick="confirmDelete(${rencontre.id_rencontre})">
+            <i class="fas fa-trash-alt"></i>
+        </a>
+    </div>`;
+
 
         matchCard.appendChild(matchHeader);
         matchCard.appendChild(matchBody);
         matchCard.appendChild(matchFooter);
-
         return matchCard;
     }
 
-    // Fonction pour formater la date en français
     function formatDate(dateString) {
         const date = new Date(dateString);
-        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-        return date.toLocaleDateString('fr-FR', options);
+        return date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
     }
 
-    // Fonction pour déterminer la couleur du score
     function getScoreColor(scoreEquipe, scoreAdverse) {
-        if (scoreEquipe > scoreAdverse) {
-            return '#2dbc2d'; // Victoire
-        } else if (scoreEquipe < scoreAdverse) {
-            return 'red'; // Défaite
-        } else if (scoreEquipe === scoreAdverse && scoreEquipe !== null && scoreAdverse !== null) {
-            return 'white'; // Match nul
-        }
+        if (scoreEquipe > scoreAdverse) return '#2dbc2d';
+        if (scoreEquipe < scoreAdverse) return 'red';
+        if (scoreEquipe === scoreAdverse && scoreEquipe !== null) return 'white';
         return '#1E1E1E';
     }
 
-    // Fonction pour obtenir le score
     function getScore(scoreEquipe, scoreAdverse, lieu) {
         if (lieu === 'Domicile') {
             return scoreEquipe !== null && scoreAdverse !== null ? `${scoreEquipe} - ${scoreAdverse}` : '-';
@@ -137,14 +126,33 @@
         }
     }
 
-    // Fonction pour confirmer la suppression
     function confirmDelete(id_rencontre) {
         if (confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?')) {
             supprimer_rencontre(id_rencontre);
         }
     }
 
-    // Appeler la fonction pour récupérer et afficher les rencontres au chargement de la page
+    async function supprimer_rencontre(id_rencontre) {
+        try {
+            const response = await fetch(`${baseUrl}${resource}?id_rencontre=${id_rencontre}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            const result = await response.json();
+            console.log("Réponse de suppression :", result);
+
+            if (response.ok) {
+                alert('Rencontre supprimée avec succès');
+                fetchAndDisplayRencontres();
+            } else {
+                alert('Erreur lors de la suppression : ' + result.status_message);
+            }
+        } catch (error) {
+            console.error('Erreur Fetch:', error);
+        }
+    }
+
     fetchAndDisplayRencontres();
 </script>
 </body>

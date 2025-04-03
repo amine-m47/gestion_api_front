@@ -1,46 +1,3 @@
-<?php
-include __DIR__ . '/../Layouts/header.php';
-
-use App\Controleurs\RencontreControleur;
-
-$rencontreControleur = new RencontreControleur();
-$id_rencontre = $_GET['id_rencontre'] ?? null;
-
-if (!$id_rencontre) {
-    echo "ID de la rencontre non fourni.";
-    exit;
-}
-
-// Récupérer les informations actuelles de la rencontre
-$rencontre = $rencontreControleur->getRencontreById($id_rencontre);
-
-if (!$rencontre) {
-    echo "Rencontre non trouvée.";
-    exit;
-}
-
-// Traitement du formulaire après soumission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupérer les nouvelles valeurs
-    $equipe_adverse = $_POST['equipe_adverse'];
-    $date_rencontre = $_POST['date_rencontre'];
-    $heure_rencontre = $_POST['heure_rencontre'];
-    $lieu = $_POST['lieu'];
-
-    // Vérification que la nouvelle date et heure sont valides
-    $currentDateTime = new DateTime();
-    $dateTimeRendezvous = new DateTime("$date_rencontre $heure_rencontre");
-
-    if ($dateTimeRendezvous <= $currentDateTime) {
-        echo "<p style='color: red;'>Erreur : La date et l'heure de la rencontre doivent être supérieures à la date et l'heure actuelles.</p>";
-    } else {
-        // Modification de la rencontre si la date et l'heure sont valides
-        $rencontreControleur->modifier_rencontre($id_rencontre, $equipe_adverse, $date_rencontre, $heure_rencontre, $lieu);
-        echo "<p style='color: green;'>Rencontre modifiée avec succès !</p>";
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -48,44 +5,94 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/formulaire.css">
     <title>Modifier une rencontre</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id_rencontre = urlParams.get("id_rencontre");
+
+            if (!id_rencontre) {
+                alert("ID de la rencontre non fourni.");
+                return;
+            }
+
+            const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint';
+            const resource = `/RencontreEndpoint.php?id_rencontre=${id_rencontre}`;
+            const apiUrl = `${baseUrl}${resource}`;
+
+            try {
+                const response = await fetch(apiUrl, { method: "GET" });
+
+                if (!response.ok) throw new Error("Rencontre non trouvée");
+
+                const rencontre = await response.json();
+
+                document.getElementById("equipe_adverse").value = rencontre.equipe_adverse;
+                document.getElementById("date_rencontre").value = rencontre.date_rencontre;
+                document.getElementById("heure_rencontre").value = rencontre.heure_rencontre;
+                document.getElementById("lieu").value = rencontre.lieu;
+            } catch (error) {
+                alert(error.message);
+            }
+
+            // Gestion du formulaire de modification
+            document.getElementById("modifier-rencontre-form").addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                const equipe_adverse = document.getElementById("equipe_adverse").value;
+                const date_rencontre = document.getElementById("date_rencontre").value;
+                const heure_rencontre = document.getElementById("heure_rencontre").value;
+                const lieu = document.getElementById("lieu").value;
+
+                const currentDateTime = new Date();
+                const dateTimeRendezvous = new Date(`${date_rencontre}T${heure_rencontre}`);
+
+                if (dateTimeRendezvous <= currentDateTime) {
+                    alert("Erreur : La date et l'heure doivent être supérieures à la date et l'heure actuelles.");
+                    return;
+                }
+
+                const rencontreData = { equipe_adverse, date_rencontre, heure_rencontre, lieu };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(rencontreData)
+                    });
+
+                    if (!response.ok) throw new Error("Erreur lors de la modification");
+                    alert("Rencontre modifiée avec succès !");
+                } catch (error) {
+                    alert(error.message);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <div id="modifier-style">
     <main>
         <h1>Modifier une rencontre</h1>
-        <form method="post" action="">
+        <form id="modifier-rencontre-form">
             <div class="form-group">
                 <label for="equipe_adverse">Équipe Adverse :</label>
-                <input type="text" id="equipe_adverse" name="equipe_adverse"
-                       value="<?= htmlspecialchars($rencontre['equipe_adverse']) ?>"  pattern="[A-Za-zÀ-ÿ]+" required>
+                <input type="text" id="equipe_adverse" name="equipe_adverse" pattern="[A-Za-zÀ-ÿ]+" required>
             </div>
-
             <div class="form-group">
-                <label for="date_rencontre">Date de la rencontre :</label>
-                <?php
-                $minDate = date("Y-m-d");
-                ?>
-                <input type="date" id="date_rencontre" name="date_rencontre"
-                       value="<?= htmlspecialchars($rencontre['date_rencontre']) ?>" required min="<?= $minDate ?>">
+                <label for="date_rencontre">Date :</label>
+                <input type="date" id="date_rencontre" name="date_rencontre" required>
             </div>
-
             <div class="form-group">
-                <label for="heure_rencontre">Heure de la rencontre :</label>
-                <?php
-                $minTime = date("H:i", strtotime("+1 minute"));
-                ?>
-                <input type="time" id="heure_rencontre" name="heure_rencontre"
-                       value="<?= htmlspecialchars($rencontre['heure_rencontre']) ?>" required>
+                <label for="heure_rencontre">Heure :</label>
+                <input type="time" id="heure_rencontre" name="heure_rencontre" required>
             </div>
-
             <div class="form-group">
                 <label for="lieu">Lieu :</label>
                 <select id="lieu" name="lieu" required>
-                    <option value="Domicile" <?= $rencontre['lieu'] === 'Domicile' ? 'selected' : '' ?>>Domicile</option>
-                    <option value="Exterieur" <?= $rencontre['lieu'] === 'Exterieur' ? 'selected' : '' ?>>Exterieur</option>
+                    <option value="Domicile">Domicile</option>
+                    <option value="Exterieur">Exterieur</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <button type="submit">Modifier</button>
             </div>
@@ -94,5 +101,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 </body>
 </html>
-
-<?php include __DIR__ . '/../Layouts/footer.php'; ?>
