@@ -1,9 +1,14 @@
 <?php
-require_once __DIR__ . '/../../../vendor/autoload.php';
+session_start();
 
-use App\Controleurs\AuthControleur;
+// Store the referrer URL
+$referrer = $_SERVER['HTTP_REFERER'] ?? '/FootAPI/gestion_api_front/app/vues/Accueil/accueil.php';
 
+// Destroy the session
+session_unset();
+session_destroy();
 
-$auth = new AuthControleur();
-$auth->logout();
-
+// Redirect to the referrer URL
+header("Location: $referrer");
+exit;
+?>

@@ -3,7 +3,10 @@
 require_once __DIR__ . '/../../../vendor/autoload.php';
 require_once __DIR__ . '/../../auth/auth.php';
 
-if (basename($_SERVER['REQUEST_URI']) !== 'accueil') {
+$publicPages = ['accueil', 'login'];
+$currentPage = basename($_SERVER['REQUEST_URI'], '.php');
+
+if (!in_array($currentPage, $publicPages)) {
     verifierUtilisateurConnecte();
 }
 ?>
@@ -22,7 +25,7 @@ if (basename($_SERVER['REQUEST_URI']) !== 'accueil') {
 
     <?php
     // Inclusion du menu en fonction de l'état de connexion
-    if (isset($_SESSION['utilisateur_id'])) {
+    if (isset($_SESSION['token'])) {
         include __DIR__ . '/menu.php';
     } else {
         include __DIR__ . '/menu_deconnecter.php';
@@ -31,5 +34,3 @@ if (basename($_SERVER['REQUEST_URI']) !== 'accueil') {
 </header>
 </body>
 </html>
-
-

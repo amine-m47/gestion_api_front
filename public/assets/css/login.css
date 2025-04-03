@@ -32,7 +32,7 @@ label {
     font-weight: bold;
 }
 
-input[type="email"],
+input[type="text"],
 input[type="password"] {
     width: 95%;
     padding: 12px;
@@ -44,7 +44,7 @@ input[type="password"] {
     transition: border-color 0.3s;
 }
 
-input[type="email"]:focus,
+input[type="text"]:focus,
 input[type="password"]:focus {
     outline: none;
     border-color: #1f3c60b8;

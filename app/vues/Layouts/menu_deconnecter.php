@@ -1,6 +1,6 @@
 <nav>
     <ul>
-        <li><a href="/FootAPI/gestion_api_front/accueil">Accueil</a></li>
-        <li><a href="/FootAPI/gestion_api_front/connexion">Connexion</a></li>
+        <li><a href="../Accueil/accueil.php">Accueil</a></li>
+        <li><a href="../Authentification/login.php">Connexion</a></li>
     </ul>
 </nav>
