@@ -3,12 +3,7 @@
 require_once __DIR__ . '/../../../vendor/autoload.php';
 require_once __DIR__ . '/../../auth/auth.php';
 
-$publicPages = ['accueil', 'login'];
-$currentPage = basename($_SERVER['REQUEST_URI'], '.php');
 
-if (!in_array($currentPage, $publicPages)) {
-    verifierUtilisateurConnecte();
-}
 ?>
 
 <!DOCTYPE html>
