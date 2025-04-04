@@ -35,17 +35,17 @@ if (!$idRencontre) {
 
             const matchPasse = new Date(`${rencontre.date_rencontre} ${rencontre.heure_rencontre}`) < new Date();
 
-// Appel de l'API pour récupérer les joueurs sélectionnés
+        // Appel de l'API pour récupérer les joueurs sélectionnés
             const joueursSelectionnesResponse = await fetchData(`/SelectionEndpoint.php?id_rencontre=${idRencontre}`);
             console.log(joueursSelectionnesResponse.data);
             const joueursSelectionnes = joueursSelectionnesResponse?.data?.joueurs_selectionnes ?? [];
 
-// Récupération des notes existantes si le match est passé
+        // Récupération des notes existantes si le match est passé
             const notesExistantes = matchPasse ? await fetchData(`/NotesEndpoint.php?id_rencontre=${idRencontre}`) || {} : {};
 
-// Appel de l'API pour récupérer la liste des joueurs actifs via SelectionEndpoint
+        // Appel de l'API pour récupérer la liste des joueurs actifs via SelectionEndpoint
             const joueursActifsResponse = await fetchData(`/SelectionEndpoint.php?id_rencontre=${idRencontre}`);
-            const joueursActifs = joueursActifsResponse && joueursActifsResponse.joueurs_actifs ? joueursActifsResponse.joueurs_actifs : [];
+            const joueursActifs = joueursActifsResponse?.data?.joueurs_actifs ?? [];
 
 
             const postesFixes = ["GB", "DG", "DCG", "DCD", "DD", "MD", "MCG", "MCD", "AD", "AG", "BU", "R1", "R2", "R3", "R4", "R5"];
