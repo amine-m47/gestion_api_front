@@ -4,6 +4,8 @@ session_start();
 // Store the referrer URL
 $referrer = $_SERVER['HTTP_REFERER'] ?? '/FootAPI/gestion_api_front/app/vues/Accueil/accueil.php';
 
+unset($_SESSION['token']);
+
 // Destroy the session
 session_unset();
 session_destroy();

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint/StatistiqueEndpoint.php'; // Remplacez par l'URL correcte de votre API
+    const baseUrl = 'https://footballmanagerapi.alwaysdata.net'; // Remplacez par l'URL correcte de votre API
 
     // Fonction pour récupérer les statistiques des rencontres et des joueurs
     async function fetchStatistics() {

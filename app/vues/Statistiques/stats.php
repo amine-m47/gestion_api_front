@@ -72,7 +72,7 @@
         </table>
     </main>
 </div>
+<script src="/FootAPI/gestion_api_front/app/Controleurs/Statistiques.js"></script>
 <?php include __DIR__ . '/../Layouts/footer.php'; ?>
-<script src="../../Controleurs/Statistiques.js"></script>
 </body>
 </html>
