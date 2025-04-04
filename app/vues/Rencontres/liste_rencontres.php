@@ -14,7 +14,7 @@ include __DIR__ . '/../Layouts/header.php';
 <body>
 <main id="liste">
     <h1>Gestion des rencontres</h1>
-    <div style="text-align: center;"><a href="ajouter_rencontre.php" class="btn-ajouter">Ajouter une rencontre</a></div>
+    <div style="text-align: center;"><a href="/FootAPI/gestion_api_front/ajouter_rencontre" class="btn-ajouter">Ajouter une rencontre</a></div>
 
     <div class="rencontres-container">
         <div class="column">
