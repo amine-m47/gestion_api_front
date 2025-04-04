@@ -1,18 +1,20 @@
-const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint';
-const resource = '/JoueurEndpoint.php';
+const baseUrl = 'https://footballmanagerapi.alwaysdata.net';
+const resource = '/joueur';
 
 // Méthode pour effectuer un appel API GET pour récupérer tous les joueurs
 function getAllJoueurs() {
     fetch(`${baseUrl}${resource}`)
-        .then(response => response.json()) // Convertir la réponse en JSON
+        .then(response => response.json())
         .then(data => {
-            if (data.status_code === 200) {
-                displayData(data.data);
+            console.log("🔍 Réponse API:", data); // Afficher la réponse complète pour debug
+
+            if (Array.isArray(data)) { // Vérifie si data est bien un tableau
+                displayData(data);
             } else {
-                console.error('Erreur lors de la récupération des joueurs:', data.status_message);
+                console.error('Erreur: format inattendu des données', data);
             }
         })
-        .catch(error => console.error('Erreur Fetch:', error));
+        .catch(error => console.error('Erreur Fetch:', error.message));
 }
 
 // Méthode pour afficher les données dans le tableau HTML
@@ -48,50 +50,29 @@ function displayData(joueurs) {
 // Fonction pour préparer la mise à jour d'un joueur
 function prepareUpdate(numero_licence) {
     document.getElementById('updateNumeroLicence').value = numero_licence;
-    // Remplir les champs de mise à jour avec les données du joueur
-    // Vous pouvez appeler getJoueur(numero_licence) pour obtenir les données du joueur et les insérer dans les champs
 }
 
-// Attacher les événements aux boutons
-document.getElementById('getAllJoueurs').addEventListener('click', getAllJoueurs);
-document.getElementById('getJoueur').addEventListener('click', () => {
-    const numero_licence = document.getElementById('joueurID').value;
-    getJoueur(numero_licence);
-});
-document.getElementById('addJoueur').addEventListener('click', () => {
-    const joueurData = {
-        numero_licence: document.getElementById('newNumeroLicence').value,
-        nom: document.getElementById('newNom').value,
-        prenom: document.getElementById('newPrenom').value,
-        date_naissance: document.getElementById('newDateNaissance').value,
-        taille: document.getElementById('newTaille').value,
-        poids: document.getElementById('newPoids').value,
-        statut: document.getElementById('newStatut').value,
-        position_preferee: document.getElementById('newPositionPreferee').value,
-        commentaire: document.getElementById('newCommentaire').value
-    };
-    addJoueur(joueurData);
-});
-document.getElementById('updateJoueur').addEventListener('click', () => {
-    const numero_licence = document.getElementById('updateNumeroLicence').value;
-    const joueurData = {
-        nom: document.getElementById('updateNom').value,
-        prenom: document.getElementById('updatePrenom').value,
-        date_naissance: document.getElementById('updateDateNaissance').value,
-        taille: document.getElementById('updateTaille').value,
-        poids: document.getElementById('updatePoids').value,
-        statut: document.getElementById('updateStatut').value,
-        position_preferee: document.getElementById('updatePositionPreferee').value,
-        commentaire: document.getElementById('updateCommentaire').value
-    };
-    updateJoueur(numero_licence, joueurData);
-});
-document.getElementById('deleteJoueur').addEventListener('click', () => {
-    const numero_licence = document.getElementById('deleteNumeroLicence').value;
-    deleteJoueur(numero_licence);
-});
+// Fonction pour ajouter dynamiquement le bouton "Ajouter un joueur"
+function addButton() {
+    const main = document.querySelector('main');
+    if (main) {
+        const button = document.createElement('a');
+        button.className = 'btn-ajouter';
+        button.href = 'ajouter_joueur';
+        button.textContent = 'Ajouter un joueur';
+        button.style.display = 'block';
+        button.style.margin = '10px auto';
+        button.style.textAlign = 'center';
 
-// Chargement des joueurs au démarrage
+        main.insertBefore(button, main.firstChild);
+    } else {
+        console.warn("L'élément <main> n'a pas été trouvé !");
+    }
+}
+
+// Chargement des joueurs et ajout du bouton au démarrage
 document.addEventListener("DOMContentLoaded", function() {
-    getAllJoueurs(); // Charge automatiquement les joueurs à l'ouverture de la page
+    console.log("DOM chargé, exécution du script !");
+    getAllJoueurs(); // Charge automatiquement les joueurs
+    addButton(); // Ajoute le bouton "Ajouter un joueur"
 });

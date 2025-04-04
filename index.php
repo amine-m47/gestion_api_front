@@ -16,11 +16,9 @@ $routes = [
     'ajouter_rencontre' => 'app/vues/Rencontres/ajouter_rencontre.php',
     'ajouter_resultat' => 'app/vues/Equipes/ajouter_resultat.php',
     'modifier_rencontre' => 'app/vues/Rencontres/modifier_rencontre.php',
-    'supprimer_rencontre' => 'app/vues/Rencontres/supprimer_rencontre.php',
     'selectionner' => 'app/vues/Rencontres/feuille_rencontres.php',
     'ajouter_joueur' => 'app/vues/Joueurs/ajouter_joueur.php',
     'modifier_joueur' => 'app/vues/Joueurs/modifier_joueur.php',
-    'supprimer_joueur' => 'app/vues/Joueurs/supprimer_joueur.php',
 ];
 
 // Vérifier si la route existe et inclure le bon fichier

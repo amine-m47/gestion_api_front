@@ -15,9 +15,6 @@ header("Access-Control-Allow-Origin: *");
 <div id="liste">
     <main>
         <h1>Gestion des joueurs</h1>
-        <div style="text-align: center; margin-top: 10px">
-            <a class="btn-ajouter" href="ajouter_joueur.php">Ajouter un joueur</a>
-        </div>
 
         <table border="1">
             <thead>
@@ -42,14 +39,7 @@ header("Access-Control-Allow-Origin: *");
 </div>
 
 <!-- Chargement du script JavaScript -->
-<script src="../../Controleurs/Joueur.js" defer></script>
-
-<!-- Chargement des joueurs au démarrage -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        getAllJoueurs(); // Charge automatiquement les joueurs à l'ouverture de la page
-    });
-</script>
+<script src="/FootAPI/gestion_api_front/app/Controleurs/Joueur.js" defer></script>
 
 </body>
 </html>
