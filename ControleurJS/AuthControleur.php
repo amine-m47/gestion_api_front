@@ -2,8 +2,9 @@
 
 namespace App\Controleurs;
 
+use App\Modele\Database;
 use App\Modele\Utilisateur;
-use App\Config\Database;
+
 class AuthControleur {
     private $db;
 
@@ -19,7 +20,7 @@ class AuthControleur {
             session_start();
             $_SESSION['utilisateur_id'] = $utilisateur['id_utilisateur'];
             $_SESSION['email'] = $utilisateur['email'];
-            header("Location: /football_manager/accueil");
+            header("Location: /../../accueil");
             exit;
         }
     }
@@ -28,7 +29,7 @@ class AuthControleur {
         session_start();
         session_unset();
         session_destroy();
-        header("Location: /football_manager/accueil");
+        header("Location: /../../accueil");
         exit;
     }
 }
