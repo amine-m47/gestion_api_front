@@ -37,7 +37,8 @@ if (!$idRencontre) {
 
 // Appel de l'API pour récupérer les joueurs sélectionnés
             const joueursSelectionnesResponse = await fetchData(`/SelectionEndpoint.php?id_rencontre=${idRencontre}`);
-            const joueursSelectionnes = joueursSelectionnesResponse && joueursSelectionnesResponse.joueurs_selectionnes ? joueursSelectionnesResponse.joueurs_selectionnes : [];
+            console.log(joueursSelectionnesResponse.data);
+            const joueursSelectionnes = joueursSelectionnesResponse?.data?.joueurs_selectionnes ?? [];
 
 // Récupération des notes existantes si le match est passé
             const notesExistantes = matchPasse ? await fetchData(`/NotesEndpoint.php?id_rencontre=${idRencontre}`) || {} : {};

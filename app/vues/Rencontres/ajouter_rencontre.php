@@ -1,3 +1,7 @@
+<?php
+include __DIR__ . '/../Layouts/header.php';
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
