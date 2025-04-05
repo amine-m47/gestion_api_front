@@ -10,17 +10,19 @@ $uri = trim($uri, '/');
 // Mapping des routes propres vers les fichiers correspondants
 $routes = [
     'accueil' => 'app/vues/Accueil/accueil.php',
-    'rencontres' => 'app/vues/Rencontres/liste_rencontres.php',
-    'joueurs' => 'app/vues/Joueurs/liste_joueurs.php',
-    'form_joueur' => 'app/vues/Joueurs/form_joueur.php',
-    'modifier_joueur' => 'app/vues/Joueurs/modifier_joueur.php',
-    'statistiques' => 'app/vues/Statistiques/stats.php',
     'logout' => 'app/vues/Authentification/logout.php',
     'login' => 'app/vues/Authentification/login.php',
+
+    'rencontres' => 'app/vues/Rencontres/liste_rencontres.php',
     'ajouter_rencontre' => 'app/vues/Rencontres/ajouter_rencontre.php',
     'ajouter_resultat' => 'app/vues/Equipes/ajouter_resultat.php',
     'modifier_rencontre' => 'app/vues/Rencontres/modifier_rencontre.php',
     'selectionner' => 'app/vues/Rencontres/feuille_rencontres.php',
+
+    'joueurs' => 'app/vues/Joueurs/liste_joueurs.php',
+    'form_joueur' => 'app/vues/Joueurs/form_joueur.php',
+
+    'statistiques' => 'app/vues/Statistiques/stats.php',
 ];
 
 // Vérifier si la route existe et inclure le bon fichier
