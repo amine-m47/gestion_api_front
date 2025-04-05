@@ -79,7 +79,7 @@ include __DIR__ . '/../Layouts/header.php';
         matchBody.className = 'match-body';
         matchBody.innerHTML = `
             <div class="team">
-                <div class="team-name team-end">${isFuture ? 'Équipe' : 'Nom Équipe'}</div>
+                <div class="team-name team-end">France</div>
                 <span class="score" style="background-color: ${getScoreColor(rencontre.score_equipe, rencontre.score_adverse)};">
                     ${getScore(rencontre.score_equipe, rencontre.score_adverse, rencontre.lieu)}
                 </span>

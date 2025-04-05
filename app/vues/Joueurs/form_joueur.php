@@ -193,7 +193,7 @@ if (($action === 'modifier' || $action === 'supprimer') && $id) {
             const result = await response.json();
 
             if (response.ok) {
-                window.location.href = '/FootAPI/gestion_api_front/joueurs'; // Redirection propre
+                window.location.href = '/FootAPI/gestion_api_front/joueurs';
             } else {
                 alert("Erreur : " + result.status_message);
             }

@@ -16,7 +16,7 @@ if (!$idRencontre) {
     <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/selection.css">
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
-            const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint';
+            const baseUrl = 'https://footballmanagerapi.alwaysdata.net/';
             const idRencontre = <?php echo json_encode($idRencontre); ?>;
             const tableCompo = document.querySelector(".table-compo tbody");
             const tableSelection = document.querySelector(".table-selection tbody");
@@ -27,7 +27,7 @@ if (!$idRencontre) {
                 return response.ok ? response.json() : null;
             }
 
-            const rencontre = await fetchData(`/RencontreEndpoint.php/${idRencontre}`);
+            const rencontre = await fetchData(`/rencontre/${idRencontre}`);
             if (!rencontre) {
                 document.body.innerHTML = "<p>Rencontre non trouvée.</p>";
                 return;
@@ -36,12 +36,12 @@ if (!$idRencontre) {
             const matchPasse = new Date(`${rencontre.date_rencontre} ${rencontre.heure_rencontre}`) < new Date();
 
 // Appel de l'API pour récupérer les joueurs sélectionnés
-            const joueursSelectionnesResponse = await fetchData(`/SelectionEndpoint.php?id_rencontre=${idRencontre}`);
+            const joueursSelectionnesResponse = await fetchData(`/selection/${idRencontre}`);
             console.log(joueursSelectionnesResponse.data);
             const joueursSelectionnes = joueursSelectionnesResponse?.data?.joueurs_selectionnes ?? [];
 
 // Récupération des notes existantes si le match est passé
-            const notesExistantes = matchPasse ? await fetchData(`/NotesEndpoint.php?id_rencontre=${idRencontre}`) || {} : {};
+            const notesExistantes = matchPasse ? await fetchData(`/selection?id_rencontre=${idRencontre}`) || {} : {};
 
 // Appel de l'API pour récupérer la liste des joueurs actifs via SelectionEndpoint
             const joueursActifsResponse = await fetchData(`/SelectionEndpoint.php?id_rencontre=${idRencontre}`);
