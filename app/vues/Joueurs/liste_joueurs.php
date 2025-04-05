@@ -16,6 +16,7 @@ header("Access-Control-Allow-Origin: *");
     <main>
         <h1>Gestion des joueurs</h1>
 
+        <div style="text-align: center;"><a href="/FootAPI/gestion_api_front/form_joueur?action=ajouter" class="btn-ajouter">➕ Ajouter un joueur</a></div>
         <table border="1">
             <thead>
             <tr>

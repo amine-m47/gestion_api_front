@@ -17,6 +17,64 @@ function getAllJoueurs() {
         .catch(error => console.error('Erreur Fetch:', error.message));
 }
 
+function ajouterJoueur(joueurData) {
+    fetch(`${baseUrl}${resource}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(joueurData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status_code === 201) {
+                alert("oueur ajouté avec succès !");
+                getAllJoueurs(); // Refresh list
+            } else {
+                console.error("Erreur lors de l'ajout :", data.status_message);
+            }
+        })
+        .catch(error => console.error('Erreur Fetch (POST):', error));
+}
+
+function modifierJoueur(numero_licence, joueurData) {
+    fetch(`${baseUrl}${resource}?id=${numero_licence}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(joueurData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status_code === 200) {
+                alert("✏️ Joueur modifié avec succès !");
+                getAllJoueurs(); // Refresh list
+            } else {
+                console.error("Erreur modification :", data.status_message);
+            }
+        })
+        .catch(error => console.error('Erreur Fetch (PUT):', error));
+}
+
+function deleteJoueur(numero_licence) {
+    if (confirm("❗Êtes-vous sûr de vouloir supprimer ce joueur ?")) {
+        fetch(`${baseUrl}${resource}?id=${numero_licence}`, {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status_code === 200) {
+                    alert("🗑️ Joueur supprimé !");
+                    getAllJoueurs(); // Refresh list
+                } else {
+                    console.error("Erreur suppression :", data.status_message);
+                }
+            })
+            .catch(error => console.error('Erreur Fetch (DELETE):', error));
+    }
+}
+
 // Méthode pour afficher les données dans le tableau HTML
 function displayData(joueurs) {
     const tableBody = document.getElementById('responseTableBody');
@@ -37,42 +95,17 @@ function displayData(joueurs) {
         // Ajouter les actions Modifier et Supprimer
         const actionsCell = row.insertCell(9);
         actionsCell.innerHTML = `
-            <button class="btn-modifier" onclick="prepareUpdate('${joueur.numero_licence}')">
+            <a href="/FootAPI/gestion_api_front/form_joueur?action=modifier&id=${joueur.numero_licence}" class="btn-modifier">
                 <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn-supprimer" onclick="deleteJoueur('${joueur.numero_licence}')">
+            </a>
+            <a href="/FootAPI/gestion_api_front/form_joueur?action=supprimer&id=${joueur.numero_licence}" class="btn-supprimer" onclick="return confirm('Voulez-vous vraiment supprimer ce joueur ?');">
                 <i class="fas fa-trash-alt"></i>
-            </button>
+            </a>
         `;
     });
 }
 
-// Fonction pour préparer la mise à jour d'un joueur
-function prepareUpdate(numero_licence) {
-    document.getElementById('updateNumeroLicence').value = numero_licence;
-}
-
-// Fonction pour ajouter dynamiquement le bouton "Ajouter un joueur"
-function addButton() {
-    const main = document.querySelector('main');
-    if (main) {
-        const button = document.createElement('a');
-        button.className = 'btn-ajouter';
-        button.href = 'ajouter_joueur';
-        button.textContent = 'Ajouter un joueur';
-        button.style.display = 'block';
-        button.style.margin = '10px auto';
-        button.style.textAlign = 'center';
-
-        main.insertBefore(button, main.firstChild);
-    } else {
-        console.warn("L'élément <main> n'a pas été trouvé !");
-    }
-}
-
 // Chargement des joueurs et ajout du bouton au démarrage
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("DOM chargé, exécution du script !");
     getAllJoueurs(); // Charge automatiquement les joueurs
-    addButton(); // Ajoute le bouton "Ajouter un joueur"
 });
