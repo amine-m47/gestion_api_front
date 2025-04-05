@@ -1,5 +1,5 @@
-const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint';
-const resource = '/RencontreEndpoint.php';
+const baseUrl = 'https://footballmanagerapi.alwaysdata.net';
+const resource = '/rencontre';
 
 // Méthode pour effectuer un appel API GET pour récupérer tous les rencontres
 function liste_rencontre() {

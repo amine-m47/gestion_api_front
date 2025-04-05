@@ -17,64 +17,6 @@ function getAllJoueurs() {
         .catch(error => console.error('Erreur Fetch:', error.message));
 }
 
-function ajouterJoueur(joueurData) {
-    fetch(`${baseUrl}${resource}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(joueurData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status_code === 201) {
-                alert("oueur ajouté avec succès !");
-                getAllJoueurs(); // Refresh list
-            } else {
-                console.error("Erreur lors de l'ajout :", data.status_message);
-            }
-        })
-        .catch(error => console.error('Erreur Fetch (POST):', error));
-}
-
-function modifierJoueur(numero_licence, joueurData) {
-    fetch(`${baseUrl}${resource}?id=${numero_licence}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(joueurData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status_code === 200) {
-                alert("✏️ Joueur modifié avec succès !");
-                getAllJoueurs(); // Refresh list
-            } else {
-                console.error("Erreur modification :", data.status_message);
-            }
-        })
-        .catch(error => console.error('Erreur Fetch (PUT):', error));
-}
-
-function deleteJoueur(numero_licence) {
-    if (confirm("❗Êtes-vous sûr de vouloir supprimer ce joueur ?")) {
-        fetch(`${baseUrl}${resource}?id=${numero_licence}`, {
-            method: 'DELETE'
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status_code === 200) {
-                    alert("🗑️ Joueur supprimé !");
-                    getAllJoueurs(); // Refresh list
-                } else {
-                    console.error("Erreur suppression :", data.status_message);
-                }
-            })
-            .catch(error => console.error('Erreur Fetch (DELETE):', error));
-    }
-}
-
 // Méthode pour afficher les données dans le tableau HTML
 function displayData(joueurs) {
     const tableBody = document.getElementById('responseTableBody');

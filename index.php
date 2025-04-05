@@ -15,9 +15,9 @@ $routes = [
 
     'rencontres' => 'app/vues/Rencontres/liste_rencontres.php',
     'ajouter_rencontre' => 'app/vues/Rencontres/ajouter_rencontre.php',
-    'ajouter_resultat' => 'app/vues/Equipes/ajouter_resultat.php',
+    'score' => 'app/vues/Rencontres/ajouter_resultat.php',
     'modifier_rencontre' => 'app/vues/Rencontres/modifier_rencontre.php',
-    'selectionner' => 'app/vues/Rencontres/feuille_rencontres.php',
+    'selection' => 'app/vues/Rencontres/feuille_rencontres.php',
 
     'joueurs' => 'app/vues/Joueurs/liste_joueurs.php',
     'form_joueur' => 'app/vues/Joueurs/form_joueur.php',
