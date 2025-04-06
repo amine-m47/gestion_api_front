@@ -197,7 +197,32 @@ include __DIR__ . '/../Layouts/header.php';
         matchCard.appendChild(matchFooter);
         return matchCard;
     }
+    function confirmDelete(id_rencontre) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?')) {
+            supprimer_rencontre(id_rencontre);
+        }
+    }
 
+    async function supprimer_rencontre(id_rencontre) {
+        try {
+            const response = await fetch(`${baseUrl}${resource}?id_rencontre=${id_rencontre}`, {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json'}
+            });
+
+            const result = await response.json();
+            console.log("Réponse de suppression :", result);
+
+            if (response.ok) {
+                fetchAndDisplayRencontres();
+            } else {
+                alert('Erreur lors de la suppression : ' + result.status_message);
+            }
+        } catch (error) {
+            console.error('Erreur Fetch:', error);
+        }
+    }
+    
     function formatDate(dateString) {
         const date = new Date(dateString);
         return date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
