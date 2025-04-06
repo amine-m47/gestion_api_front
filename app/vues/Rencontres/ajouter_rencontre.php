@@ -36,7 +36,7 @@ include __DIR__ . '/../Layouts/header.php';
 
 <script>
     const baseUrl = 'https://footballmanagerapi.alwaysdata.net';
-    const resource = `/rencontre;
+    const resource = `/rencontre`;
 
     document.getElementById('rencontreForm').addEventListener('submit', async function(event) {
         event.preventDefault();

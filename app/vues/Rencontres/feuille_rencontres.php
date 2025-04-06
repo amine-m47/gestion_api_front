@@ -113,8 +113,6 @@ if (!$idRencontre) {
                 };
 
 
-// Vérifie que les données sont correctes
-                console.log(JSON.stringify(data)); // Affiche les données envoyées
 
                 const response = await fetch(`${baseUrl}selection/${idRencontre}`, {
                     method: "POST",
@@ -123,7 +121,7 @@ if (!$idRencontre) {
                 });
 
                 if (response.ok) {
-                    window.location.href = "/rencontres";
+                    window.location.href = "/FootAPI/gestion_api_front/rencontres";
                 } else {
                     alert("Erreur lors de l'enregistrement.");
                 }
