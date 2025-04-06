@@ -1,4 +1,10 @@
-<?php define('BASE_URL', '/FootAPI/gestion_api_front/'); ?>
+<?php
+// Vérifie si la constante BASE_URL n'est pas déjà définie
+if (!defined('BASE_URL')) {
+    define('BASE_URL', '/FootAPI/gestion_api_front/');
+}
+?>
+<!-- Menu pour l'utilisateur connecté -->
 <nav>
     <ul>
         <li><a href="<?= BASE_URL ?>accueil">Accueil</a></li>

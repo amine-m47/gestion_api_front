@@ -23,4 +23,3 @@ echo $token;
     </body>
     </html>
 
-<?php include __DIR__ . '/../Layouts/footer.php'; ?>

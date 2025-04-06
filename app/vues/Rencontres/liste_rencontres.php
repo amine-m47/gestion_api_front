@@ -160,3 +160,5 @@ include __DIR__ . '/../Layouts/header.php';
 </script>
 </body>
 </html>
+
+<?php include __DIR__ . '/../Layouts/footer.php'; ?>
