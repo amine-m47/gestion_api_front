@@ -10,6 +10,58 @@ include __DIR__ . '/../Layouts/header.php';
     <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/rencontres.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Liste des Rencontres</title>
+    <style>
+        .stade-container {
+            position: relative;
+            width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .stade-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .joueurs-sur-image {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .joueur {
+            position: absolute;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 3px;
+            border-radius: 5px;
+        }
+
+        .gb { bottom: 10%; left: 50%; transform: translateX(-50%); }
+        .dg { bottom: 25%; left: 5%; }
+        .dcg { bottom: 25%; left: 28%; }
+        .dcd { bottom: 25%; right: 5%; }
+        .dd  {bottom: 25%; right: 28%; }
+        .md { bottom: 40%; right: 45%; }
+        .mcg { bottom: 50%; left: 20%; }
+        .mcd { bottom: 50%; right: 20%; }
+        .ad { top: 0%; right: 10%; }
+        .ag { top: 0%; left: 10%; }
+        .bu { top: 10%; left: 50%; transform: translateX(-50%); }
+    </style>
 </head>
 <body>
 <main id="liste">
@@ -31,6 +83,7 @@ include __DIR__ . '/../Layouts/header.php';
 <script>
     const baseUrl = 'https://footballmanagerapi.alwaysdata.net';
     const resource = '/rencontre';
+    const selection = '/selection';
 
     async function fetchAndDisplayRencontres() {
         try {
@@ -42,26 +95,46 @@ include __DIR__ . '/../Layouts/header.php';
         }
     }
 
+    async function fetchJoueursSelectionnes(id_rencontre) {
+        try {
+            const response = await fetch(`${baseUrl}${selection}/${id_rencontre}`);
+            const data = await response.json();
+
+            if (Array.isArray(data.data.joueurs_selectionnes)) {
+                return data.data.joueurs_selectionnes.filter(joueur => !['R1', 'R2', 'R3', 'R4', 'R5'].includes(joueur.poste));
+            } else {
+                console.error("Données invalides : 'joueurs_selectionnes' n'est pas un tableau");
+                return [];
+            }
+        } catch (error) {
+            console.error('Erreur Fetch joueurs:', error);
+            return [];
+        }
+    }
+
     function displayRencontres(rencontres) {
         const pastMatchesDiv = document.getElementById('pastMatches');
         const upcomingMatchesDiv = document.getElementById('upcomingMatches');
         pastMatchesDiv.innerHTML = '';
         upcomingMatchesDiv.innerHTML = '';
 
-        rencontres.forEach(rencontre => {
+        rencontres.forEach(async (rencontre) => {
             const matchDateTime = new Date(`${rencontre.date_rencontre} ${rencontre.heure_rencontre}`);
             const currentDateTime = new Date();
             const isMatchFutur = matchDateTime > currentDateTime;
 
+            const joueursSelectionnes = await fetchJoueursSelectionnes(rencontre.id_rencontre);
+            const matchCard = createMatchCard(rencontre, isMatchFutur, joueursSelectionnes);
+
             if (isMatchFutur) {
-                upcomingMatchesDiv.appendChild(createMatchCard(rencontre, true));
+                upcomingMatchesDiv.appendChild(matchCard);
             } else {
-                pastMatchesDiv.appendChild(createMatchCard(rencontre, false));
+                pastMatchesDiv.appendChild(matchCard);
             }
         });
     }
 
-    function createMatchCard(rencontre, isFuture) {
+    function createMatchCard(rencontre, isFuture, joueursSelectionnes) {
         const matchCard = document.createElement('div');
         matchCard.className = 'match-card';
 
@@ -85,24 +158,39 @@ include __DIR__ . '/../Layouts/header.php';
                 </span>
                 <div class="team-name team-left">${rencontre.equipe_adverse}</div>
             </div>`;
+        const stadeContainer = document.createElement('div');
+        stadeContainer.className = 'stade-container';
+        const stadeImage = document.createElement('img');
+        stadeImage.className = 'stade-image';
+        stadeImage.src = '/FootAPI/gestion_api_front/public/assets/images/stade.jpg';
+        stadeImage.alt = 'Stade';
+        stadeContainer.appendChild(stadeImage);
+
+        joueursSelectionnes.forEach(joueur => {
+            const joueurDiv = document.createElement('div');
+            joueurDiv.className = 'joueur ' + getJoueurPosition(joueur.poste);
+            joueurDiv.innerText = `${joueur.nom} ${joueur.prenom}`;
+            stadeContainer.appendChild(joueurDiv);
+        });
+
+        matchBody.appendChild(stadeContainer);
 
         const matchFooter = document.createElement('div');
         matchFooter.className = 'match-footer';
         matchFooter.innerHTML = `
-    <div class="actions">
-        <a href="/FootAPI/gestion_api_front/selection?id_rencontre=${rencontre.id_rencontre}" class="btn-action">
-            ${isFuture ? 'Sélection' : 'Evaluations'}
-        </a>
-        <a href="${isFuture
+            <div class="actions">
+                <a href="/FootAPI/gestion_api_front/selection?id_rencontre=${rencontre.id_rencontre}" class="btn-action">
+                    ${isFuture ? 'Sélection' : 'Evaluations'}
+                </a>
+                <a href="${isFuture
             ? `/FootAPI/gestion_api_front/modifier_rencontre?id_rencontre=${rencontre.id_rencontre}`
             : `/FootAPI/gestion_api_front/score?id_rencontre=${rencontre.id_rencontre}`}" class="btn-action">
-            ${isFuture ? 'Modifier' : 'Score'}
-        </a>
-        <a href="#" class="btn-supprimer" onclick="confirmDelete(${rencontre.id_rencontre})">
-            <i class="fas fa-trash-alt"></i>
-        </a>
-    </div>`;
-
+                    ${isFuture ? 'Modifier' : 'Score'}
+                </a>
+                <a href="#" class="btn-supprimer" onclick="confirmDelete(${rencontre.id_rencontre})">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>`;
 
         matchCard.appendChild(matchHeader);
         matchCard.appendChild(matchBody);
@@ -130,35 +218,25 @@ include __DIR__ . '/../Layouts/header.php';
         }
     }
 
-    function confirmDelete(id_rencontre) {
-        if (confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?')) {
-            supprimer_rencontre(id_rencontre);
-        }
-    }
-
-    async function supprimer_rencontre(id_rencontre) {
-        try {
-            const response = await fetch(`${baseUrl}${resource}?id_rencontre=${id_rencontre}`, {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            const result = await response.json();
-            console.log("Réponse de suppression :", result);
-
-            if (response.ok) {
-                fetchAndDisplayRencontres();
-            } else {
-                alert('Erreur lors de la suppression : ' + result.status_message);
-            }
-        } catch (error) {
-            console.error('Erreur Fetch:', error);
-        }
+    function getJoueurPosition(poste) {
+        const positions = {
+            "GB": "gb",
+            "DG": "dg",
+            "DCG": "dcg",
+            "DCD": "dcd",
+            "DD": "dd",
+            "MD": "md",
+            "MCG": "mcg",
+            "MCD": "mcd",
+            "AD": "ad",
+            "AG": "ag",
+            "BU": "bu"
+        };
+        return positions[poste] || "bu";  // Position par défaut si non défini
     }
 
     fetchAndDisplayRencontres();
 </script>
+
 </body>
 </html>
-
-<?php include __DIR__ . '/../Layouts/footer.php'; ?>

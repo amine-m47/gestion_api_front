@@ -2,7 +2,6 @@
 include __DIR__ . '/../Layouts/header.php';
 
 $token = $_SESSION['token'] ?? null;
-echo $token;
 ?>
 
     <!DOCTYPE html>

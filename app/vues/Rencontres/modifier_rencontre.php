@@ -19,7 +19,7 @@ include __DIR__ . '/../Layouts/header.php';
             }
 
             const baseUrl = 'https://footballmanagerapi.alwaysdata.net';
-            const resource = `/rencontre?id=${id_rencontre}`;
+            const resource = `/rencontre?id_rencontre=${id_rencontre}`;
             const apiUrl = `${baseUrl}${resource}`;
 
             try {

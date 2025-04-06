@@ -41,8 +41,8 @@ include __DIR__ . '/../Layouts/header.php';
 </main>
 
 <script>
-    const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint';
-    const resource = '/RencontreEndpoint.php';
+    const baseUrl = 'https://footballmanagerapi.alwaysdata.net';
+    const resource = `/rencontre`;
 
     // Fonction pour récupérer les données de la rencontre
     async function fetchRencontreData(id_rencontre) {

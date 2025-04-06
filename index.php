@@ -6,6 +6,10 @@ $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
 $uri = str_replace('/FootAPI/gestion_api_front/', '', $uri);
 $uri = trim($uri, '/');
 
+// Rediriger vers l'accueil si l'URI est vide
+if ($uri === '') {
+    $uri = 'accueil';
+}
 
 // Mapping des routes propres vers les fichiers correspondants
 $routes = [

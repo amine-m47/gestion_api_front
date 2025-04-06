@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../auth/auth.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/footer.css">
+    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/header.css">
     <title>Football Manager</title>
 </head>
 <body>
