@@ -7,8 +7,6 @@ $joueur = null;
 
 // Récupérer les données du joueur s’il s’agit d’une modification
 if (($action === 'modifier' || $action === 'supprimer') && $id) {
-    // Affiche l'ID pour déboguer
-    echo $id;
 
     // Récupération des données via l'API
     $json = file_get_contents("https://footballmanagerapi.alwaysdata.net/joueur?id=$id");
@@ -36,6 +34,8 @@ if (($action === 'modifier' || $action === 'supprimer') && $id) {
 
     <?php if ($action !== 'supprimer'): ?>
         <form id="joueurForm">
+            <input type="hidden" id="action" value="<?= $action ?>">
+            <input type="hidden" id="id" value="<?= $id ?>">
             <label for="nom">Numéro de licence :</label>
             <input type="number" id="numero_licence" value="<?= $joueur['numero_licence'] ?? '' ?>">
 
@@ -83,126 +83,13 @@ if (($action === 'modifier' || $action === 'supprimer') && $id) {
             <button type="submit"><?= ucfirst($action) ?> joueur</button>
         </form>
     <?php else: ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                supprimerJoueur(); // Suppression immédiate
-            });
-        </script>
+        <input type="hidden" id="action" value="<?= $action ?>">
+        <input type="hidden" id="id" value="<?= $id ?>">
     <?php endif; ?>
-
 
     <div id="message"></div>
 </main>
 
-<script>
-    const baseUrl = 'https://footballmanagerapi.alwaysdata.net/joueur';
-    const action = '<?= $action ?>';
-    const id = '<?= $id ?>';
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById('joueurForm');
-        const message = document.getElementById('message');
-
-        if (form) {
-            form.addEventListener('submit', async function (e) {
-                e.preventDefault();
-                message.innerHTML = ''; // reset
-
-                const joueurData = {
-                    numero_licence: document.getElementById('numero_licence').value,
-                    nom: document.getElementById('nom').value,
-                    prenom: document.getElementById('prenom').value,
-                    date_naissance: document.getElementById('date_naissance').value,
-                    taille: document.getElementById('taille').value,
-                    poids: document.getElementById('poids').value,
-                    statut: document.getElementById('statut').value,
-                    position_preferee: document.getElementById('position_preferee').value,
-                    commentaire: document.getElementById('commentaire').value
-                };
-
-                const erreurs = validerChamps(joueurData);
-
-                if (erreurs.length > 0) {
-                    // Si des erreurs existent, on les affiche dans un message
-                    message.innerHTML = `<ul style="color: red;">${erreurs.map(e => `<li>${e}</li>`).join('')}</ul>`;
-                    return; // On arrête l'envoi du formulaire si des erreurs existent
-                }
-
-                let fetchOptions = {
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(joueurData)
-                };
-
-                try {
-                    let response;
-                    if (action === 'ajouter') {
-                        fetchOptions.method = 'POST';
-                        response = await fetch(baseUrl, fetchOptions);
-                    } else if (action === 'modifier') {
-                        fetchOptions.method = 'PUT';
-                        response = await fetch(`${baseUrl}?id=${id}`, fetchOptions);
-                    }
-
-                    const result = await response.json();
-                    if (response.ok) {
-                        message.innerHTML = `<p style="color: green;"><?= ucfirst($action) ?> en cours...</p>`;
-                        setTimeout(() => window.location.href = 'joueurs', 1000);
-                    } else {
-                        message.innerHTML = `<p style="color: red;">Erreur: ${result.status_message}</p>`;
-                    }
-                } catch (error) {
-                    console.error("Erreur API:", error);
-                    message.innerHTML = `<p style="color: red;">Erreur de réseau.</p>`;
-                }
-            });
-        }
-    });
-
-    function validerChamps(joueur) {
-        const erreurs = [];
-
-        if (!joueur.numero_licence.trim() || isNaN(joueur.numero_licence)) {
-            erreurs.push("Le numéro de licence est obligatoire et doit être un chiffre.");
-        }
-
-        // Validation du nom, prénom et date de naissance
-        if (!joueur.nom.trim() || !joueur.prenom.trim() || !joueur.date_naissance.trim()) {
-            erreurs.push("Le nom, le prénom et la date de naissance sont obligatoires.");
-        }
-
-        // Validation de la taille
-        const taille = parseFloat(joueur.taille);
-        if (isNaN(taille) || taille < 1.30 || taille > 2.50) {
-            erreurs.push("La taille doit être comprise entre 1.30 m et 2.50 m.");
-        }
-
-        // Validation du poids
-        const poids = parseFloat(joueur.poids);
-        if (isNaN(poids) || poids < 30 || poids > 300) {
-            erreurs.push("Le poids doit être compris entre 30 kg et 300 kg.");
-        }
-
-        return erreurs;
-    }
-
-
-    // Suppression
-    async function supprimerJoueur() {
-        try {
-            const response = await fetch(`${baseUrl}?id=${id}`, { method: 'DELETE' });
-            const result = await response.json();
-
-            if (response.ok) {
-                window.location.href = '/FootAPI/gestion_api_front/joueurs';
-            } else {
-                alert("Erreur : " + result.status_message);
-            }
-        } catch (error) {
-            console.error("Erreur suppression:", error);
-            alert("Une erreur est survenue.");
-        }
-    }
-
-</script>
+<script src="/FootAPI/gestion_api_front/app/Controleurs/Joueur.js"></script>
 </body>
 </html>
