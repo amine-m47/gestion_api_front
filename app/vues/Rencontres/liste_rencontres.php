@@ -14,7 +14,7 @@ include __DIR__ . '/../Layouts/header.php';
 <body>
 <main id="liste">
     <h1>Gestion des rencontres</h1>
-    <div style="text-align: center;"><a href="ajouter_rencontre.php" class="btn-ajouter">Ajouter une rencontre</a></div>
+    <div style="text-align: center;"><a href="/FootAPI/gestion_api_front/ajouter_rencontre" class="btn-ajouter">Ajouter une rencontre</a></div>
 
     <div class="rencontres-container">
         <div class="column">
@@ -29,8 +29,8 @@ include __DIR__ . '/../Layouts/header.php';
 </main>
 
 <script>
-    const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint';
-    const resource = '/RencontreEndpoint.php';
+    const baseUrl = 'https://footballmanagerapi.alwaysdata.net';
+    const resource = '/rencontre';
 
     async function fetchAndDisplayRencontres() {
         try {
@@ -79,7 +79,7 @@ include __DIR__ . '/../Layouts/header.php';
         matchBody.className = 'match-body';
         matchBody.innerHTML = `
             <div class="team">
-                <div class="team-name team-end">${isFuture ? 'Équipe' : 'Nom Équipe'}</div>
+                <div class="team-name team-end">France</div>
                 <span class="score" style="background-color: ${getScoreColor(rencontre.score_equipe, rencontre.score_adverse)};">
                     ${getScore(rencontre.score_equipe, rencontre.score_adverse, rencontre.lieu)}
                 </span>
@@ -90,12 +90,12 @@ include __DIR__ . '/../Layouts/header.php';
         matchFooter.className = 'match-footer';
         matchFooter.innerHTML = `
     <div class="actions">
-        <a href="/FootAPI/gestion_api_front/app/vues/Rencontres/feuille_rencontres.php?id_rencontre=${rencontre.id_rencontre}" class="btn-action">
+        <a href="/FootAPI/gestion_api_front/selection?id_rencontre=${rencontre.id_rencontre}" class="btn-action">
             ${isFuture ? 'Sélection' : 'Evaluations'}
         </a>
         <a href="${isFuture
-            ? `/FootAPI/gestion_api_front/app/vues/Rencontres/modifier_rencontre.php?id_rencontre=${rencontre.id_rencontre}`
-            : `/FootAPI/gestion_api_front/app/vues/Rencontres/ajouter_resultat.php?id_rencontre=${rencontre.id_rencontre}`}" class="btn-action">
+            ? `/FootAPI/gestion_api_front/modifier_rencontre?id_rencontre=${rencontre.id_rencontre}`
+            : `/FootAPI/gestion_api_front/score?id_rencontre=${rencontre.id_rencontre}`}" class="btn-action">
             ${isFuture ? 'Modifier' : 'Score'}
         </a>
         <a href="#" class="btn-supprimer" onclick="confirmDelete(${rencontre.id_rencontre})">
@@ -147,7 +147,6 @@ include __DIR__ . '/../Layouts/header.php';
             console.log("Réponse de suppression :", result);
 
             if (response.ok) {
-                alert('Rencontre supprimée avec succès');
                 fetchAndDisplayRencontres();
             } else {
                 alert('Erreur lors de la suppression : ' + result.status_message);
@@ -161,3 +160,5 @@ include __DIR__ . '/../Layouts/header.php';
 </script>
 </body>
 </html>
+
+<?php include __DIR__ . '/../Layouts/footer.php'; ?>

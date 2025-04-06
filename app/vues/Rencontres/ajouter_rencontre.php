@@ -70,9 +70,11 @@ include __DIR__ . '/../Layouts/header.php';
 
                 if (response.ok) {
                     messageDiv.innerHTML = '<p style="color: green;">Rencontre ajoutée avec succès!</p>';
+                    window.location.href = '/FootAPI/gestion_api_front/app/vues/Rencontres/liste_rencontres.php';
                 } else {
                     messageDiv.innerHTML = '<p style="color: red;">Erreur lors de l\'ajout de la rencontre.</p>';
                 }
+
             } catch (error) {
                 console.error('Erreur Fetch:', error);
                 messageDiv.innerHTML = '<p style="color: red;">Erreur réseau. Veuillez réessayer.</p>';

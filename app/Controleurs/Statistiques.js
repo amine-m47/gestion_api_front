@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const baseUrl = 'https://footballmanagerapi.alwaysdata.net'; // Remplacez par l'URL correcte de votre API
+    const baseUrl = 'https://footballmanagerapi.alwaysdata.net'; // Base URL de l'API
 
     // Fonction pour récupérer les statistiques des rencontres et des joueurs
     async function fetchStatistics() {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Afficher les statistiques des joueurs
         const joueursTableBody = document.getElementById('joueurs-table-body');
-        joueursTableBody.innerHTML = '';
+        joueursTableBody.innerHTML = ''; // Nettoyer le tableau avant de le remplir
 
         joueurs.forEach(async (joueur) => {
             const statsJoueurResponse = await fetch(`${baseUrl}/statistique?id=${joueur.numero_licence}`);

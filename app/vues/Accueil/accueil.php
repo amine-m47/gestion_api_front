@@ -17,10 +17,9 @@ echo $token;
     <main>
         <div class="welcome-container">
             <h1>
-                Bienvenue <?= isset($_SESSION['token']) ? "Zidane Football Management" : "sur Football Management" ?>
+                Bienvenue <?= isset($_SESSION['token']) ? "Zidane sur Football Management" : "sur Football Management" ?>
             </h1>
     </main>
     </body>
     </html>
 
-<?php include __DIR__ . '/../Layouts/footer.php'; ?>

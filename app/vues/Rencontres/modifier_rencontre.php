@@ -18,8 +18,8 @@ include __DIR__ . '/../Layouts/header.php';
                 return;
             }
 
-            const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint';
-            const resource = `/RencontreEndpoint.php?id_rencontre=${id_rencontre}`;
+            const baseUrl = 'https://footballmanagerapi.alwaysdata.net';
+            const resource = `/rencontre?id=${id_rencontre}`;
             const apiUrl = `${baseUrl}${resource}`;
 
             try {
@@ -64,7 +64,7 @@ include __DIR__ . '/../Layouts/header.php';
                     });
 
                     if (!response.ok) throw new Error("Erreur lors de la modification");
-                    alert("Rencontre modifiée avec succès !");
+                    window.location.href = '/FootAPI/gestion_api_front/rencontres';
                 } catch (error) {
                     alert(error.message);
                 }

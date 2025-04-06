@@ -16,7 +16,7 @@ if (!$idRencontre) {
     <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/selection.css">
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
-            const baseUrl = 'http://localhost/FootAPI/gestion_api_back/Endpoint';
+            const baseUrl = 'https://footballmanagerapi.alwaysdata.net/';
             const idRencontre = <?php echo json_encode($idRencontre); ?>;
             const tableCompo = document.querySelector(".table-compo tbody");
             const tableSelection = document.querySelector(".table-selection tbody");
@@ -27,7 +27,7 @@ if (!$idRencontre) {
                 return response.ok ? response.json() : null;
             }
 
-            const rencontre = await fetchData(`/RencontreEndpoint.php/${idRencontre}`);
+            const rencontre = await fetchData(`/rencontre/${idRencontre}`);
             if (!rencontre) {
                 document.body.innerHTML = "<p>Rencontre non trouvée.</p>";
                 return;

@@ -2,6 +2,7 @@
 // Chargement des dépendances
 require_once __DIR__ . '/../../../vendor/autoload.php';
 require_once __DIR__ . '/../../auth/auth.php';
+header("Access-Control-Allow-Origin: *");
 
 
 ?>
@@ -20,7 +21,7 @@ require_once __DIR__ . '/../../auth/auth.php';
 
     <?php
     // Inclusion du menu en fonction de l'état de connexion
-    if (isset($_SESSION['token'])) {
+    if (verifierUtilisateurConnecte()) {
         include __DIR__ . '/menu.php';
     } else {
         include __DIR__ . '/menu_deconnecter.php';
