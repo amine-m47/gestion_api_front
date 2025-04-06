@@ -35,15 +35,14 @@ if (!$idRencontre) {
 
             const matchPasse = new Date(`${rencontre.date_rencontre} ${rencontre.heure_rencontre}`) < new Date();
 
-        // Appel de l'API pour récupérer les joueurs sélectionnés
+            // Appel de l'API pour récupérer les joueurs sélectionnés
             const joueursSelectionnesResponse = await fetchData(`/SelectionEndpoint.php?id_rencontre=${idRencontre}`);
-            console.log(joueursSelectionnesResponse.data);
             const joueursSelectionnes = joueursSelectionnesResponse?.data?.joueurs_selectionnes ?? [];
 
-        // Récupération des notes existantes si le match est passé
+            // Récupération des notes existantes si le match est passé
             const notesExistantes = matchPasse ? await fetchData(`/NotesEndpoint.php?id_rencontre=${idRencontre}`) || {} : {};
 
-        // Appel de l'API pour récupérer la liste des joueurs actifs via SelectionEndpoint
+            // Appel de l'API pour récupérer la liste des joueurs actifs via SelectionEndpoint
             const joueursActifsResponse = await fetchData(`/SelectionEndpoint.php?id_rencontre=${idRencontre}`);
             const joueursActifs = joueursActifsResponse?.data?.joueurs_actifs ?? [];
 
@@ -62,17 +61,20 @@ if (!$idRencontre) {
                     <td>${joueur ? joueur.nom : '-'}</td>
                     <td>${joueur ? joueur.prenom : '-'}</td>
                     ${matchPasse ? `<td>
-                        <select name="notes[${joueur?.numero_licence || ''}]">
-                            <option value="">-- Choisir --</option>
-                            ${[1,2,3,4,5].map(i => `<option value="${i}" ${notesExistantes[joueur?.numero_licence] == i ? 'selected' : ''}>${'★'.repeat(i)}</option>`).join('')}
-                        </select>
-                    </td>` : ''}
+                    <select class="postes" name="postes[${joueur.numero_licence}]">
+                        <option value="">-- Choisir --</option>
+                        ${postesFixes.map(poste => `<option value="${poste}" ${postesAssignes[poste]?.numero_licence == joueur.numero_licence ? 'selected' : ''}>${poste}</option>`).join('')}
+                    </select>
+                    </td>` : '' }
                 </tr>`;
                 tableCompo.insertAdjacentHTML("beforeend", row);
             });
 
             if (!matchPasse) {
                 joueursActifs.forEach(joueur => {
+                    // Si le joueur a déjà un poste sélectionné, on l'affiche à la place de "-- Choisir --"
+                    const posteSelectionne = joueursSelectionnes.find(j => j.numero_licence === joueur.numero_licence)?.poste || '';
+
                     const row = `<tr>
                         <td>${joueur.nom}</td>
                         <td>${joueur.prenom}</td>
@@ -80,7 +82,9 @@ if (!$idRencontre) {
                         <td>
                             <select class="postes" name="postes[${joueur.numero_licence}]">
                                 <option value="">-- Choisir --</option>
-                                ${postesFixes.map(poste => `<option value="${poste}" ${postesAssignes[poste]?.numero_licence == joueur.numero_licence ? 'selected' : ''}>${poste}</option>`).join('')}
+                                ${postesFixes.map(poste =>
+                        `<option value="${poste}" ${poste === posteSelectionne ? 'selected' : ''}>${poste}</option>`
+                    ).join('')}
                             </select>
                         </td>
                     </tr>`;
@@ -91,20 +95,38 @@ if (!$idRencontre) {
             form.addEventListener("submit", async (e) => {
                 e.preventDefault();
                 const formData = new FormData(form);
+
+                const selections = {};
+                [...formData.entries()].forEach(([key, value]) => {
+                    if (key.startsWith("postes[")) {
+                        const numero_licence = key.match(/\[([^\]]+)\]/)[1];
+                        selections[numero_licence] = value;
+                    }
+                });
+
+// Transforme selections en un tableau d'objets avec numero_licence et poste
+                const selectionsArray = Object.entries(selections).map(([numero_licence, poste]) => ({
+                    numero_licence,
+                    poste
+                }));
+
                 const data = {
                     id_rencontre: idRencontre,
-                    postes: Object.fromEntries([...formData.entries()].filter(([k]) => k.startsWith("postes["))),
-                    notes: Object.fromEntries([...formData.entries()].filter(([k]) => k.startsWith("notes[")))
+                    selections: selectionsArray
                 };
 
-                const response = await fetch(`${baseUrl}/SelectionEndpoint.php?id_rencontre=${idRencontre}`, {
+
+// Vérifie que les données sont correctes
+                console.log(JSON.stringify(data)); // Affiche les données envoyées
+
+                const response = await fetch(`${baseUrl}/SelectionEndpoint.php`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
                 });
 
                 if (response.ok) {
-                    window.location.href = "/football_manager/rencontres";
+                    console.log("ok");
                 } else {
                     alert("Erreur lors de l'enregistrement.");
                 }
