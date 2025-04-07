@@ -1,7 +1,7 @@
 <?php
 // Vérifie si la constante BASE_URL n'est pas déjà définie
 if (!defined('BASE_URL')) {
-    define('BASE_URL', '/FootAPI/gestion_api_front/');
+    define('BASE_URL', '');
 }
 ?>
 <!-- Menu pour l'utilisateur connecté -->

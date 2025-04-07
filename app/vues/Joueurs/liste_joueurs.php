@@ -7,7 +7,7 @@ header("Access-Control-Allow-Origin: *");
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/joueurs.css">
+        <link rel="stylesheet" href="public/assets/css/joueurs.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <title>Liste des joueurs</title>
     </head>
@@ -17,7 +17,7 @@ header("Access-Control-Allow-Origin: *");
             <h1>Gestion des joueurs</h1>
 
             <!-- Bouton pour ajouter un nouveau joueur -->
-            <div style="text-align: center;"><a href="/FootAPI/gestion_api_front/form_joueur?action=ajouter" class="btn-ajouter">➕ Ajouter un joueur</a></div>
+            <div style="text-align: center;"><a href="form_joueur?action=ajouter" class="btn-ajouter">➕ Ajouter un joueur</a></div>
 
             <!-- Tableau pour afficher la liste des joueurs -->
             <table border="1">
@@ -43,7 +43,7 @@ header("Access-Control-Allow-Origin: *");
     </div>
 
     <!-- Inclusion du fichier JavaScript pour gérer les joueurs -->
-    <script src="/FootAPI/gestion_api_front/app/Controleurs/Joueur.js" defer></script>
+    <script src="app/Controleurs/Joueur.js" defer></script>
 
     </body>
     </html>

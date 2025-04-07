@@ -5,13 +5,15 @@ function verifierUtilisateurConnecte() {
     $current_url = $_SERVER['REQUEST_URI'];
     $allowed_urls = [
         '/FootAPI/gestion_api_front/accueil',
-        '/FootAPI/gestion_api_front/connexion'
+        '/FootAPI/gestion_api_front/connexion',
+        '/footballmanager.alwaysdata.net/accueil',
+        '/footballmanager.alwaysdata.net/connexion'
     ];
 
     if (!isset($_SESSION['token'])) {
         if (!in_array($current_url, $allowed_urls)) {
             // Si l'utilisateur n'est pas connecté, rediriger vers l'accueil
-            header("Location: /FootAPI/gestion_api_front/accueil");
+            header("Location: accueil");
             exit;
         }
         return false;
@@ -36,7 +38,7 @@ function verifierUtilisateurConnecte() {
     if ($http_code !== 200) {
         if (!in_array($current_url, $allowed_urls)) {
             // Si le token n'est pas valide, rediriger vers l'accueil
-            header("Location: /FootAPI/gestion_api_front/accueil");
+            header("Location: accueil");
             exit;
         }
         return false;

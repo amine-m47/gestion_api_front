@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['utilisateur_id'] = $response['user_id']; // Set the user ID in the session
 
             // Redirect to the referrer URL or default to the home page
-            $referrer = $_SESSION['referrer'] ?? '/FootAPI/gestion_api_front/acceuil';
+            $referrer = $_SESSION['referrer'] ?? 'accueil';
             header("Location: $referrer");
             exit;
         } else {
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 } else {
     // Store the referrer URL
-    $_SESSION['referrer'] = $_SERVER['HTTP_REFERER'] ?? '/FootAPI/gestion_api_front/accueil';
+    $_SESSION['referrer'] = $_SERVER['HTTP_REFERER'] ?? 'accueil';
 }
 ?>
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Connexion</title>
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/login.css">
+    <link rel="stylesheet" href="public/assets/css/login.css">
 </head>
 <body>
 <div>

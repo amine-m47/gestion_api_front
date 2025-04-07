@@ -13,7 +13,7 @@ if (!$idRencontre) {
 <head>
     <meta charset="UTF-8">
     <title>Feuille de Match</title>
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/selection.css">
+    <link rel="stylesheet" href="public/assets/css/selection.css">
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const baseUrl = 'https://footballmanagerapi.alwaysdata.net/';
@@ -27,7 +27,7 @@ if (!$idRencontre) {
                 return response.ok ? response.json() : null;
             }
 
-            const rencontre = await fetchData(`/rencontre/${idRencontre}`);
+            const rencontre = await fetchData(`rencontre?id=${idRencontre}`);
             if (!rencontre) {
                 document.body.innerHTML = "<p>Rencontre non trouvée.</p>";
                 return;
@@ -36,14 +36,11 @@ if (!$idRencontre) {
             const matchPasse = new Date(`${rencontre.date_rencontre} ${rencontre.heure_rencontre}`) < new Date();
 
             // Appel de l'API pour récupérer les joueurs sélectionnés
-            const joueursSelectionnesResponse = await fetchData(`/SelectionEndpoint.php?id_rencontre=${idRencontre}`);
+            const joueursSelectionnesResponse = await fetchData(`selection/${idRencontre}`);
             const joueursSelectionnes = joueursSelectionnesResponse?.data?.joueurs_selectionnes ?? [];
 
-            // Récupération des notes existantes si le match est passé
-            const notesExistantes = matchPasse ? await fetchData(`/NotesEndpoint.php?id_rencontre=${idRencontre}`) || {} : {};
-
-            // Appel de l'API pour récupérer la liste des joueurs actifs via SelectionEndpoint
-            const joueursActifsResponse = await fetchData(`/SelectionEndpoint.php?id_rencontre=${idRencontre}`);
+            // Appel de l'API pour récupérer la liste des joueurs actifs via Selection API
+            const joueursActifsResponse = await fetchData(`selection/${idRencontre}`);
             const joueursActifs = joueursActifsResponse?.data?.joueurs_actifs ?? [];
 
 
@@ -116,17 +113,15 @@ if (!$idRencontre) {
                 };
 
 
-// Vérifie que les données sont correctes
-                console.log(JSON.stringify(data)); // Affiche les données envoyées
 
-                const response = await fetch(`${baseUrl}/SelectionEndpoint.php`, {
+                const response = await fetch(`${baseUrl}selection/${idRencontre}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
                 });
 
                 if (response.ok) {
-                    console.log("ok");
+                    window.location.href = "rencontres";
                 } else {
                     alert("Erreur lors de l'enregistrement.");
                 }
@@ -146,7 +141,6 @@ if (!$idRencontre) {
                     <th>Poste</th>
                     <th>Nom</th>
                     <th>Prénom</th>
-                    <th id="note-column">Note</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
