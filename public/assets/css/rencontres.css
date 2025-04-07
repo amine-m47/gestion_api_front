@@ -78,6 +78,7 @@
 /* Corps : équipes et score */
 .match-body {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .team{
@@ -286,18 +287,25 @@
 }
 
 .stade-container {
-    position: relative;
     width: 100%;
-    max-height: 500px; /* Ajuste la taille pour un terrain plus large */
-    border-radius: 10px;
+    height: auto;
+    position: relative;
     overflow: hidden;
-    margin-bottom: 10px;
-    background-size: cover;
-    background-position: center;
+    border-radius: 10px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
+
+.stade-container img.stade-image {
+    width: 90%;
+    height: 200px;
+    display: block;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
 
 .joueurs-sur-image {
     position: absolute;
@@ -305,7 +313,7 @@
     left: 50%;
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.6);
-    color: white;
+    color: black;
     font-size: 14px;
     text-align: center;
     font-weight: bold;
@@ -313,37 +321,28 @@
     border-radius: 5px;
     max-width: 90%;
 }
-.stade-container {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    max-height: 200px;
-    background-size: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
+
 
 .joueur {
     position: absolute;
-    color: white;
+    color: black;
     font-weight: bold;
     font-size: 14px;
     padding: 5px;
-    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
 }
 
-.gb { top: 10%; left: 50%; transform: translateX(-50%); }
-.dg { top: 15%; left: 10%; }
-.dcg { top: 25%; left: 15%; }
-.dcd { top: 25%; right: 15%; }
-.dd { top: 15%; right: 10%; }
-.md { top: 35%; left: 20%; }
-.mcg { top: 50%; left: 20%; }
-.mcd { top: 50%; right: 20%; }
-.ad { top: 35%; right: 20%; }
-.ag { top: 25%; right: 10%; }
-.bu { bottom: 10%; left: 50%; transform: translateX(-50%); }
+.gb { bottom: 0%; left: 50%; transform: translateX(-50%); }
+.dg { bottom: 15%; left: 5%; }
+.dcg { bottom: 30%; left: 15%; }
+.dcd { bottom: 30%; right: 15%; }
+.dd  {bottom: 15%; right: 5%; }
+.md { bottom: 45%; right: 40%; }
+.mcg { bottom: 60%; left: 20%; }
+.mcd { bottom: 60%; right: 20%; }
+.ad { top: 0%; right: 10%; }
+.ag { top: 0%; left: 10%; }
+.bu { top: 10%; left: 50%; transform: translateX(-50%); }
 
 
 /* Pour petits écrans */
