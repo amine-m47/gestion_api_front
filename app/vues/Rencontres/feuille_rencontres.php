@@ -13,7 +13,7 @@ if (!$idRencontre) {
 <head>
     <meta charset="UTF-8">
     <title>Feuille de Match</title>
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/selection.css">
+    <link rel="stylesheet" href="public/assets/css/selection.css">
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const baseUrl = 'https://footballmanagerapi.alwaysdata.net/';
@@ -121,7 +121,7 @@ if (!$idRencontre) {
                 });
 
                 if (response.ok) {
-                    window.location.href = "/FootAPI/gestion_api_front/rencontres";
+                    window.location.href = "rencontres";
                 } else {
                     alert("Erreur lors de l'enregistrement.");
                 }

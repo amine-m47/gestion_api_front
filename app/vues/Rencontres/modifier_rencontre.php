@@ -6,7 +6,7 @@ include __DIR__ . '/../Layouts/header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/formulaire.css">
+    <link rel="stylesheet" href="public/assets/css/formulaire.css">
     <title>Modifier une rencontre</title>
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
@@ -64,7 +64,7 @@ include __DIR__ . '/../Layouts/header.php';
                     });
 
                     if (!response.ok) throw new Error("Erreur lors de la modification");
-                    window.location.href = '/FootAPI/gestion_api_front/rencontres';
+                    window.location.href = 'rencontres';
                 } catch (error) {
                     alert(error.message);
                 }

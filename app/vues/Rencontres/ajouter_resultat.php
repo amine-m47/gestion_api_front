@@ -6,7 +6,7 @@ include __DIR__ . '/../Layouts/header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/formulaire.css">
+    <link rel="stylesheet" href="public/assets/css/formulaire.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Ajouter Résultat - Rencontre</title>
 </head>
@@ -102,7 +102,7 @@ include __DIR__ . '/../Layouts/header.php';
             const result = await response.json();
             if (response.ok) {
                 alert('Résultat ajouté avec succès.');
-                window.location.href = '/FootAPI/gestion_api_front/app/vues/Rencontres/liste_rencontres.php';
+                window.location.href = 'rencontres';
             } else {
                 alert('Erreur lors de l\'ajout du résultat : ' + result.status_message);
             }

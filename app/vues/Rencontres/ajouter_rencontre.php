@@ -7,7 +7,7 @@ include __DIR__ . '/../Layouts/header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/formulaire.css">
+    <link rel="stylesheet" href="public/assets/css/formulaire.css">
     <title>Ajouter une rencontre</title>
 </head>
 <body>
@@ -70,7 +70,7 @@ include __DIR__ . '/../Layouts/header.php';
 
                 if (response.ok) {
                     messageDiv.innerHTML = '<p style="color: green;">Rencontre ajoutée avec succès!</p>';
-                    window.location.href = '/FootAPI/gestion_api_front/app/vues/Rencontres/liste_rencontres.php';
+                    window.location.href = 'rencontres';
                 } else {
                     messageDiv.innerHTML = '<p style="color: red;">Erreur lors de l\'ajout de la rencontre.</p>';
                 }

@@ -7,14 +7,14 @@ include __DIR__ . '/../Layouts/header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/rencontres.css">
+    <link rel="stylesheet" href="public/assets/css/rencontres.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Liste des Rencontres</title>
 </head>
 <body>
 <main id="liste">
     <h1>Gestion des rencontres</h1>
-    <div style="text-align: center;"><a href="/FootAPI/gestion_api_front/ajouter_rencontre" class="btn-ajouter">Ajouter une rencontre</a></div>
+    <div style="text-align: center;"><a href="ajouter_rencontre" class="btn-ajouter">Ajouter une rencontre</a></div>
 
     <div class="rencontres-container">
         <div class="column">
@@ -110,7 +110,7 @@ include __DIR__ . '/../Layouts/header.php';
         stadeContainer.className = 'stade-container';
         const stadeImage = document.createElement('img');
         stadeImage.className = 'stade-image';
-        stadeImage.src = '/FootAPI/gestion_api_front/public/assets/images/stade.jpg';
+        stadeImage.src = 'public/assets/images/stade.jpg';
         stadeImage.alt = 'Stade';
         stadeContainer.appendChild(stadeImage);
 
@@ -127,12 +127,12 @@ include __DIR__ . '/../Layouts/header.php';
         matchFooter.className = 'match-footer';
         matchFooter.innerHTML = `
             <div class="actions">
-                <a href="/FootAPI/gestion_api_front/selection?id_rencontre=${rencontre.id_rencontre}" class="btn-action">
+                <a href="selection?id_rencontre=${rencontre.id_rencontre}" class="btn-action">
                     ${isFuture ? 'Sélection' : 'Evaluations'}
                 </a>
                 <a href="${isFuture
-            ? `/FootAPI/gestion_api_front/modifier_rencontre?id_rencontre=${rencontre.id_rencontre}`
-            : `/FootAPI/gestion_api_front/score?id_rencontre=${rencontre.id_rencontre}`}" class="btn-action">
+            ? `modifier_rencontre?id_rencontre=${rencontre.id_rencontre}`
+            : `score?id_rencontre=${rencontre.id_rencontre}`}" class="btn-action">
                     ${isFuture ? 'Modifier' : 'Score'}
                 </a>
                 <a href="#" class="btn-supprimer" onclick="confirmDelete(${rencontre.id_rencontre})">

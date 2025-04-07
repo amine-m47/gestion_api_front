@@ -26,7 +26,7 @@ if (($action === 'modifier' || $action === 'supprimer') && $id) {
 <head>
     <meta charset="UTF-8">
     <title><?= ucfirst($action) ?> un joueur</title>
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/formulaire.css">
+    <link rel="stylesheet" href="public/assets/css/formulaire.css">
 </head>
 <body>
 <main>
@@ -90,6 +90,6 @@ if (($action === 'modifier' || $action === 'supprimer') && $id) {
     <div id="message"></div>
 </main>
 
-<script src="/FootAPI/gestion_api_front/app/Controleurs/Joueur.js"></script>
+<script src="app/Controleurs/Joueur.js"></script>
 </body>
 </html>

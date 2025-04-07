@@ -4,6 +4,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Extraire uniquement la partie avant le ?
 $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
 $uri = str_replace('/FootAPI/gestion_api_front/', '', $uri);
+$uri = str_replace('/footballmanager.alwaysdata.net/', '', $uri);
 $uri = trim($uri, '/');
 
 // Rediriger vers l'accueil si l'URI est vide

@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/stats.css">
-    <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/charts.min.css">
+    <link rel="stylesheet" href="public/assets/css/stats.css">
+    <link rel="stylesheet" href="public/assets/css/charts.min.css">
     <title>Statistiques des Joueurs</title>
 </head>
 <body>
@@ -72,7 +72,7 @@
         </table>
     </main>
 </div>
-<script src="/FootAPI/gestion_api_front/app/Controleurs/Statistiques.js"></script>
+<script src="app/Controleurs/Statistiques.js"></script>
 <?php include __DIR__ . '/../Layouts/footer.php'; ?>
 </body>
 </html>
