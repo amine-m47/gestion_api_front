@@ -10,58 +10,6 @@ include __DIR__ . '/../Layouts/header.php';
     <link rel="stylesheet" href="/FootAPI/gestion_api_front/public/assets/css/rencontres.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Liste des Rencontres</title>
-    <style>
-        .stade-container {
-            position: relative;
-            width: 100%;
-            max-height: 200px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .stade-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .joueurs-sur-image {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 8px;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            font-size: 14px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .joueur {
-            position: absolute;
-            color: white;
-            font-weight: bold;
-            font-size: 12px;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 3px;
-            border-radius: 5px;
-        }
-
-        .gb { bottom: 10%; left: 50%; transform: translateX(-50%); }
-        .dg { bottom: 25%; left: 5%; }
-        .dcg { bottom: 25%; left: 28%; }
-        .dcd { bottom: 25%; right: 5%; }
-        .dd  {bottom: 25%; right: 28%; }
-        .md { bottom: 40%; right: 45%; }
-        .mcg { bottom: 50%; left: 20%; }
-        .mcd { bottom: 50%; right: 20%; }
-        .ad { top: 0%; right: 10%; }
-        .ag { top: 0%; left: 10%; }
-        .bu { top: 10%; left: 50%; transform: translateX(-50%); }
-    </style>
 </head>
 <body>
 <main id="liste">
